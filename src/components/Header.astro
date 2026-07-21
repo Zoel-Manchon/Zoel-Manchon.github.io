@@ -1,0 +1,96 @@
+---
+import { site } from '@/data/site';
+---
+
+<header class="site-header">
+  <div class="site-container header-inner">
+    <a class="brand" href="#top" aria-label={`${site.name}, home`}>
+      <span class="brand-mark">{site.shortName}</span>
+      <span class="brand-name">{site.name}</span>
+    </a>
+
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      <a href="#work">
+        <span class="lang-en">Work</span>
+        <span class="lang-es">Proyectos</span>
+      </a>
+      <a href="#services">
+        <span class="lang-en">Freelance</span>
+        <span class="lang-es">Freelance</span>
+      </a>
+      <a href="#about">
+        <span class="lang-en">About</span>
+        <span class="lang-es">Sobre mí</span>
+      </a>
+      <a href="#archive">
+        <span class="lang-en">Index</span>
+        <span class="lang-es">Índice</span>
+      </a>
+      <a href={site.github} target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+    </nav>
+
+    <div class="header-actions">
+      <button id="language-toggle" class="icon-button language-button" type="button" aria-label="Cambiar idioma" aria-pressed="false">
+        <span class="toggle-language-label" aria-hidden="true">ES</span>
+      </button>
+      <button id="theme-toggle" class="icon-button" type="button" aria-label="Cambiar tema" aria-pressed="true">
+        <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="3.5"></circle>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"></path>
+        </svg>
+        <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M20.5 14.6A8.6 8.6 0 0 1 9.4 3.5 8.8 8.8 0 1 0 20.5 14.6Z"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+  const root = document.documentElement;
+  const themeToggle = document.querySelector<HTMLButtonElement>('#theme-toggle');
+  const languageToggle = document.querySelector<HTMLButtonElement>('#language-toggle');
+  const languageLabel = document.querySelector<HTMLElement>('.toggle-language-label');
+  const themeMeta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
+  const descriptionMeta = document.querySelector<HTMLMetaElement>('meta[name="description"]');
+
+  const syncControls = () => {
+    const isDark = root.dataset.theme === 'dark';
+    const isSpanish = root.dataset.lang === 'es';
+
+    themeToggle?.setAttribute('aria-pressed', String(isDark));
+    themeToggle?.setAttribute('aria-label', isSpanish
+      ? isDark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'
+      : isDark ? 'Switch to light mode' : 'Switch to dark mode');
+
+    languageToggle?.setAttribute('aria-pressed', String(isSpanish));
+    languageToggle?.setAttribute('aria-label', isSpanish ? 'Cambiar a inglés' : 'Switch to Spanish');
+    if (languageLabel) languageLabel.textContent = isSpanish ? 'EN' : 'ES';
+    if (themeMeta) themeMeta.content = isDark ? '#0a0a0a' : '#f4f4f2';
+    document.title = isSpanish
+      ? 'Zoel Arias Manchón — IoT seguro de extremo a extremo'
+      : 'Zoel Arias Manchón — Secure end-to-end IoT';
+    if (descriptionMeta) {
+      descriptionMeta.content = isSpanish
+        ? 'Desarrollador IoT: firmware, telemetría, backend y paneles, con seguridad de serie. Abierto a empleo y a proyectos freelance.'
+        : 'IoT developer: firmware, telemetry, backend and dashboards, secure by default. Open to roles and freelance projects.';
+    }
+  };
+
+  themeToggle?.addEventListener('click', () => {
+    const nextTheme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = nextTheme;
+    localStorage.setItem('theme', nextTheme);
+    syncControls();
+  });
+
+  languageToggle?.addEventListener('click', () => {
+    const nextLanguage = root.dataset.lang === 'en' ? 'es' : 'en';
+    root.dataset.lang = nextLanguage;
+    root.lang = nextLanguage;
+    localStorage.setItem('language', nextLanguage);
+    syncControls();
+  });
+
+  syncControls();
+</script>

@@ -1,0 +1,45 @@
+---
+import ProjectVisual from './ProjectVisual.astro';
+import type { Project } from '@/data/site';
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+---
+
+<article
+  class:list={['project-card', 'reveal-item', { 'is-featured': project.featured, 'is-reverse': project.reverse }]}
+  style={project.accent ? `--accent: ${project.accent}; --accent-soft: ${project.accent}22;` : undefined}
+>
+  <a href={project.url} target="_blank" rel="noreferrer" class="project-link" aria-label={`${project.repo} on GitHub`}>
+    <ProjectVisual variant={project.visual} label={`${project.repo} interface preview`} terminal={project.terminal} />
+
+    <div class="project-copy">
+      <div class="project-meta">
+        <span>{project.number}</span>
+        <span class="project-repo">{project.repo}</span>
+      </div>
+
+      <div class="project-heading-row">
+        <h3>
+          <span class="lang-en">{project.title.en}</span>
+          <span class="lang-es">{project.title.es}</span>
+        </h3>
+        <span class="project-arrow" aria-hidden="true">↗</span>
+      </div>
+
+      <p class="lang-en">{project.description.en}</p>
+      <p class="lang-es">{project.description.es}</p>
+
+      <ul class="project-highlights" aria-label="Highlights">
+        {project.highlights.map((highlight) => <li>{highlight}</li>)}
+      </ul>
+
+      <ul class="project-stack" aria-label="Technologies">
+        {project.stack.map((technology) => <li>{technology}</li>)}
+      </ul>
+    </div>
+  </a>
+</article>

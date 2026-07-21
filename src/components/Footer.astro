@@ -1,0 +1,44 @@
+---
+import { site } from '@/data/site';
+---
+
+<footer class="site-footer">
+  <div class="site-container principles-block" aria-label="Principles">
+    <p class="principles-cmd"><span class="principles-prompt">$</span> cat ~/.principles</p>
+    <ul class="principles-list">
+      <li>
+        <span class="lang-en">build small systems, not isolated scripts</span>
+        <span class="lang-es">construye sistemas pequeños, no scripts sueltos</span>
+      </li>
+      <li>
+        <span class="lang-en">measure what you build</span>
+        <span class="lang-es">mide lo que construyes</span>
+      </li>
+      <li>
+        <span class="lang-en">keep security in mind from line one</span>
+        <span class="lang-es">seguridad en mente desde la primera línea</span>
+      </li>
+      <li>
+        <span class="lang-en">ship something that actually works</span>
+        <span class="lang-es">entrega algo que funcione de verdad</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="site-container footer-inner">
+    <div>
+      <p class="footer-name">{site.name}</p>
+      <p class="footer-note lang-en">Designed and built with Astro.</p>
+      <p class="footer-note lang-es">Diseñado y desarrollado con Astro.</p>
+    </div>
+    <div class="footer-links">
+      <a href={`mailto:${site.email}`}>{site.email}</a>
+      <a href="#top">
+        <span class="lang-en">Back to top</span>
+        <span class="lang-es">Volver arriba</span>
+        <span aria-hidden="true">↑</span>
+      </a>
+      <a href={site.github} target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,235 @@
+---
+interface Props {
+  variant: 'aegis' | 'vault' | 'scan' | 'market' | 'weather' | 'energy' | 'sentinel' | 'emberwall' | 'chain' | 'phosphor';
+  label: string;
+  terminal: string;
+}
+
+const { variant, label, terminal } = Astro.props;
+---
+
+<div class={`project-visual visual-${variant}`} role="img" aria-label={label}>
+  <div class="visual-window">
+    <div class="visual-topbar">
+      <span></span><span></span><span></span>
+      <div class="visual-terminal-title">{terminal}</div>
+    </div>
+
+    {variant === 'aegis' && (
+      <div class="aegis-visual-content">
+        <div class="aegis-sidebar">
+          <i></i><i></i><i></i><i></i>
+        </div>
+        <div class="aegis-main">
+          <div class="aegis-status-row"><b></b><span></span><span></span><em class="live-pill">live</em></div>
+          <div class="aegis-chart">
+            <svg viewBox="0 0 420 150" preserveAspectRatio="none" aria-hidden="true">
+              <path class="chart-grid" d="M0 30H420M0 75H420M0 120H420M70 0V150M140 0V150M210 0V150M280 0V150M350 0V150" />
+              <path class="chart-line draw-on-hover" d="M0 121 C35 118 45 80 78 87 S127 110 158 77 S208 52 238 63 S280 98 311 66 S366 28 420 38" />
+            </svg>
+          </div>
+          <div class="aegis-cards"><i></i><i class="accent-card"></i><i></i></div>
+        </div>
+      </div>
+    )}
+
+    {variant === 'scan' && (
+      <div class="scan-visual-content">
+        <div class="scan-line prompt-line"><b>$</b><i style="--w: 62%"></i></div>
+        <div class="scan-row" style="--d: 0">
+          <span class="scan-port">502</span><i class="scan-bar" style="--bar: 84%"></i><em class="scan-tag">modbus</em>
+        </div>
+        <div class="scan-row" style="--d: 1">
+          <span class="scan-port">2404</span><i class="scan-bar" style="--bar: 64%"></i><em class="scan-tag">iec-104</em>
+        </div>
+        <div class="scan-row" style="--d: 2">
+          <span class="scan-port">102</span><i class="scan-bar" style="--bar: 72%"></i><em class="scan-tag">s7comm</em>
+        </div>
+        <div class="scan-row muted" style="--d: 3">
+          <span class="scan-port">22</span><i class="scan-bar" style="--bar: 38%"></i><em class="scan-tag">ssh</em>
+        </div>
+        <div class="scan-footer"><b class="scan-cursor"></b><i style="--w: 44%"></i></div>
+      </div>
+    )}
+
+    {variant === 'vault' && (
+      <div class="vault-visual-content">
+        <div class="vault-sidebar">
+          <div class="vault-logo"></div>
+          <i></i><i></i><i></i><i></i><i></i>
+        </div>
+        <div class="vault-list">
+          <div class="vault-search"></div>
+          <div class="vault-row active"><b></b><span></span><small></small></div>
+          <div class="vault-row"><b></b><span></span><small></small></div>
+          <div class="vault-row"><b></b><span></span><small></small></div>
+          <div class="vault-row"><b></b><span></span><small></small></div>
+        </div>
+        <div class="vault-detail">
+          <div class="vault-lock">
+            <span></span>
+          </div>
+          <i></i><i></i><i></i>
+          <div class="vault-button"></div>
+        </div>
+      </div>
+    )}
+
+    {variant === 'energy' && (
+      <div class="energy-visual-content">
+        <div class="weather-topline">
+          <b></b>
+          <span></span>
+          <em class="live-pill">live</em>
+        </div>
+        <div class="energy-chart" aria-hidden="true">
+          <svg viewBox="0 0 520 130" preserveAspectRatio="none">
+            <path class="chart-grid" d="M0 32H520M0 65H520M0 98H520" />
+            <path class="quant-area" d="M0 108 C45 100 70 62 110 70 S180 96 225 58 S295 40 340 52 S420 30 470 22 L520 18 L520 130 L0 130 Z" />
+            <path class="chart-line draw-on-hover" d="M0 108 C45 100 70 62 110 70 S180 96 225 58 S295 40 340 52 S420 30 470 22 L520 18" />
+          </svg>
+        </div>
+        <div class="weather-sensors">
+          <div class="sensor-row" style="--d: 0"><span class="sensor-tag">l1</span><i class="scan-bar sensor-accent" style="--bar: 78%"></i><em class="sensor-val">3.42 kW</em></div>
+          <div class="sensor-row" style="--d: 1"><span class="sensor-tag">l2</span><i class="scan-bar" style="--bar: 41%"></i><em class="sensor-val">1.18 kW</em></div>
+          <div class="sensor-row" style="--d: 2"><span class="sensor-tag">hoy</span><i class="scan-bar" style="--bar: 56%"></i><em class="sensor-val">12.4 kWh</em></div>
+        </div>
+      </div>
+    )}
+
+    {variant === 'sentinel' && (
+      <div class="sentinel-visual-content">
+        <div class="sentinel-radar" aria-hidden="true">
+          <svg viewBox="0 0 200 110" preserveAspectRatio="xMidYMax meet">
+            <path class="radar-arc" d="M20 104 A80 80 0 0 1 180 104" />
+            <path class="radar-arc" d="M45 104 A55 55 0 0 1 155 104" />
+            <path class="radar-arc" d="M70 104 A30 30 0 0 1 130 104" />
+            <line class="radar-base" x1="12" y1="104" x2="188" y2="104" />
+            <line class="radar-sweep" x1="100" y1="104" x2="34" y2="42" />
+            <circle class="radar-blip" cx="128" cy="58" r="4" />
+          </svg>
+        </div>
+        <div class="weather-sensors">
+          <div class="sensor-row" style="--d: 0"><span class="sensor-tag">mmwave</span><i class="scan-bar sensor-accent" style="--bar: 82%"></i><em class="sensor-val">2.4 m · sí</em></div>
+          <div class="sensor-row" style="--d: 1"><span class="sensor-tag">audio</span><i class="scan-bar" style="--bar: 58%"></i><em class="sensor-val">conf 0.92</em></div>
+          <div class="sensor-row" style="--d: 2"><span class="sensor-tag">bme680</span><i class="scan-bar" style="--bar: 44%"></i><em class="sensor-val">iaq 61</em></div>
+          <div class="sensor-row" style="--d: 3"><span class="sensor-tag">cam</span><i class="scan-bar" style="--bar: 30%"></i><em class="sensor-val">local-only</em></div>
+        </div>
+      </div>
+    )}
+
+    {variant === 'weather' && (
+      <div class="weather-visual-content">
+        <div class="weather-topline">
+          <b></b>
+          <span></span>
+          <em class="live-pill">sim</em>
+        </div>
+        <div class="weather-chart" aria-hidden="true">
+          <svg viewBox="0 0 520 150" preserveAspectRatio="none">
+            <path class="chart-grid" d="M0 118H520" />
+            <path class="weather-night" d="M0 118 C60 118 80 118 120 118 L400 118 C440 118 460 118 520 118" />
+            <path class="chart-line draw-on-hover weather-curve" d="M40 118 C110 10 190 -14 260 -14 S410 10 480 118" />
+            <circle class="weather-sun" cx="182" cy="22" r="9" />
+          </svg>
+        </div>
+        <div class="weather-sensors">
+          <div class="sensor-row" style="--d: 0"><span class="sensor-tag">bme280</span><i class="scan-bar" style="--bar: 72%"></i><em class="sensor-val">1013 hPa</em></div>
+          <div class="sensor-row" style="--d: 1"><span class="sensor-tag">bh1750</span><i class="scan-bar sensor-accent" style="--bar: 86%"></i><em class="sensor-val">48k lux</em></div>
+          <div class="sensor-row" style="--d: 2"><span class="sensor-tag">pms5003</span><i class="scan-bar" style="--bar: 34%"></i><em class="sensor-val">pm2.5 low</em></div>
+          <div class="sensor-row" style="--d: 3"><span class="sensor-tag">batt</span><i class="scan-bar sensor-accent" style="--bar: 64%"></i><em class="sensor-val">charging</em></div>
+        </div>
+      </div>
+    )}
+
+    {variant === 'emberwall' && (
+      <div class="scan-visual-content">
+        <div class="scan-line prompt-line"><b>#</b><i style="--w: 54%"></i></div>
+        <div class="scan-row" style="--d: 0">
+          <span class="scan-port">boot</span><i class="scan-bar sensor-accent" style="--bar: 100%"></i><em class="scan-tag">hardened</em>
+        </div>
+        <div class="scan-row" style="--d: 1">
+          <span class="scan-port">kaslr</span><i class="scan-bar" style="--bar: 88%"></i><em class="scan-tag">on</em>
+        </div>
+        <div class="scan-row" style="--d: 2">
+          <span class="scan-port">nft</span><i class="scan-bar" style="--bar: 76%"></i><em class="scan-tag">default-deny</em>
+        </div>
+        <div class="scan-row" style="--d: 3">
+          <span class="scan-port">mqtt</span><i class="scan-bar sensor-accent" style="--bar: 66%"></i><em class="scan-tag">tls edge</em>
+        </div>
+        <div class="scan-footer"><b class="scan-cursor"></b><i style="--w: 40%"></i></div>
+      </div>
+    )}
+
+    {variant === 'chain' && (
+      <div class="scan-visual-content">
+        <div class="scan-line prompt-line"><b>⛓</b><i style="--w: 50%"></i></div>
+        <div class="chain-blocks" aria-hidden="true">
+          <span class="chain-block" style="--d: 0"></span>
+          <span class="chain-link"></span>
+          <span class="chain-block" style="--d: 1"></span>
+          <span class="chain-link"></span>
+          <span class="chain-block" style="--d: 2"></span>
+          <span class="chain-link broken"></span>
+          <span class="chain-block tampered" style="--d: 3"></span>
+        </div>
+        <div class="scan-row" style="--d: 0">
+          <span class="scan-port">#41</span><i class="scan-bar sensor-accent" style="--bar: 72%"></i><em class="scan-tag">mined</em>
+        </div>
+        <div class="scan-row muted" style="--d: 1">
+          <span class="scan-port">#42</span><i class="scan-bar" style="--bar: 48%"></i><em class="scan-tag">tampered</em>
+        </div>
+        <div class="scan-footer"><b class="scan-cursor"></b><i style="--w: 38%"></i></div>
+      </div>
+    )}
+
+    {variant === 'phosphor' && (
+      <div class="scan-visual-content phosphor-content">
+        <div class="scan-line prompt-line"><b>◆</b><i style="--w: 46%"></i><em class="live-pill guarding">guarding</em></div>
+        <div class="scan-row" style="--d: 0">
+          <span class="scan-port">src/</span><i class="scan-bar modified" style="--bar: 70%"></i><em class="scan-tag mod">modified</em>
+        </div>
+        <div class="scan-row" style="--d: 1">
+          <span class="scan-port">bin/</span><i class="scan-bar added" style="--bar: 54%"></i><em class="scan-tag add">added</em>
+        </div>
+        <div class="scan-row muted" style="--d: 2">
+          <span class="scan-port">log/</span><i class="scan-bar" style="--bar: 40%"></i><em class="scan-tag">deleted</em>
+        </div>
+        <div class="scan-row" style="--d: 3">
+          <span class="scan-port">hmac</span><i class="scan-bar sensor-accent" style="--bar: 92%"></i><em class="scan-tag">signed ✓</em>
+        </div>
+        <div class="scan-footer"><b class="scan-cursor"></b><i style="--w: 42%"></i></div>
+      </div>
+    )}
+
+    {variant === 'market' && (
+      <div class="market-visual-content">
+        <div class="market-topline">
+          <b class="market-pair"></b>
+          <span></span>
+          <em class="live-pill">ws</em>
+        </div>
+        <div class="market-chart" aria-hidden="true">
+          <svg viewBox="0 0 520 190" preserveAspectRatio="none">
+            <path class="chart-grid" d="M0 38H520M0 95H520M0 152H520" />
+            <g class="candles">
+              <g class="candle up" style="--d: 0"><line x1="30" x2="30" y1="60" y2="150" /><rect x="18" y="84" width="24" height="46" /></g>
+              <g class="candle dn" style="--d: 1"><line x1="90" x2="90" y1="52" y2="132" /><rect x="78" y="66" width="24" height="40" /></g>
+              <g class="candle up" style="--d: 2"><line x1="150" x2="150" y1="70" y2="160" /><rect x="138" y="92" width="24" height="50" /></g>
+              <g class="candle up" style="--d: 3"><line x1="210" x2="210" y1="44" y2="126" /><rect x="198" y="60" width="24" height="48" /></g>
+              <g class="candle dn" style="--d: 4"><line x1="270" x2="270" y1="36" y2="112" /><rect x="258" y="50" width="24" height="38" /></g>
+              <g class="candle up" style="--d: 5"><line x1="330" x2="330" y1="52" y2="140" /><rect x="318" y="74" width="24" height="46" /></g>
+              <g class="candle up" style="--d: 6"><line x1="390" x2="390" y1="28" y2="104" /><rect x="378" y="42" width="24" height="44" /></g>
+              <g class="candle up accent" style="--d: 7"><line x1="450" x2="450" y1="14" y2="88" /><rect x="438" y="26" width="24" height="42" /></g>
+            </g>
+          </svg>
+        </div>
+        <div class="market-footer">
+          <span class="market-tick" style="--w: 22%"></span>
+          <span class="market-tick" style="--w: 15%"></span>
+          <span class="market-tick accent-tick" style="--w: 18%"></span>
+        </div>
+      </div>
+    )}
+  </div>
+</div>
