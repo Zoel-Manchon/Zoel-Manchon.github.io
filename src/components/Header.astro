@@ -14,6 +14,10 @@ import { site } from '@/data/site';
         <span class="lang-en">Work</span>
         <span class="lang-es">Proyectos</span>
       </a>
+      <a href="#demo">
+        <span class="lang-en">Demo</span>
+        <span class="lang-es">Demo</span>
+      </a>
       <a href="#services">
         <span class="lang-en">Freelance</span>
         <span class="lang-es">Freelance</span>
@@ -68,12 +72,12 @@ import { site } from '@/data/site';
     if (languageLabel) languageLabel.textContent = isSpanish ? 'EN' : 'ES';
     if (themeMeta) themeMeta.content = isDark ? '#0a0a0a' : '#f4f4f2';
     document.title = isSpanish
-      ? 'Zoel Arias Manchón — IoT seguro de extremo a extremo'
-      : 'Zoel Arias Manchón — Secure end-to-end IoT';
+      ? 'Zoel Arias Manchón — Sistemas seguros de extremo a extremo'
+      : 'Zoel Arias Manchón — Secure systems, end to end';
     if (descriptionMeta) {
       descriptionMeta.content = isSpanish
-        ? 'Desarrollador IoT: firmware, telemetría, backend y paneles, con seguridad de serie. Abierto a empleo y a proyectos freelance.'
-        : 'IoT developer: firmware, telemetry, backend and dashboards, secure by default. Open to roles and freelance projects.';
+        ? 'Desarrollador de sistemas seguros: IoT, herramientas nativas, backends en tiempo real y seguridad aplicada. Abierto a empleo y freelance.'
+        : 'Secure-systems developer: IoT, native tooling, real-time backends and security engineering. Open to roles and freelance projects.';
     }
   };
 

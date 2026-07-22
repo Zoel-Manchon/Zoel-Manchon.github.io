@@ -34,7 +34,12 @@ const { project } = Astro.props;
       <p class="lang-es">{project.description.es}</p>
 
       <ul class="project-highlights" aria-label="Highlights">
-        {project.highlights.map((highlight) => <li>{highlight}</li>)}
+        {project.highlights.map((highlight) => (
+          <li>
+            <span class="lang-en">{highlight.en}</span>
+            <span class="lang-es">{highlight.es}</span>
+          </li>
+        ))}
       </ul>
 
       <ul class="project-stack" aria-label="Technologies">

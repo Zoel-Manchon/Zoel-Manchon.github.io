@@ -3,6 +3,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import Header from '@/components/Header.astro';
 import ProjectCard from '@/components/ProjectCard.astro';
 import Footer from '@/components/Footer.astro';
+import LiveDemo from '@/components/LiveDemo.astro';
 import { projects, site, tickerLines, archive, services } from '@/data/site';
 ---
 
@@ -68,6 +69,8 @@ import { projects, site, tickerLines, archive, services } from '@/data/site';
           {projects.map((project) => <ProjectCard project={project} />)}
         </div>
       </section>
+
+      <LiveDemo />
 
       <section id="services" class="services-section site-container" aria-labelledby="services-title">
         <div class="section-heading reveal-item">
@@ -188,8 +191,8 @@ import { projects, site, tickerLines, archive, services } from '@/data/site';
               Diseño el nodo, escribo el firmware, monto el backend, conecto el panel y endurezco el conjunto. Sin intermediarios ni “eso es de la otra empresa”. Tratas con una sola persona que responde del resultado — y todo lo que entrego lleva su propia suite de tests.
             </p>
             <p class="stat-row" aria-label="Quick stats">
-              <span class="lang-en">13 public repos ▸ 260+ tests in CI ▸ 3 OT protocols spoken</span>
-              <span class="lang-es">13 repos públicos ▸ 260+ tests en CI ▸ 3 protocolos OT</span>
+              <span class="lang-en">Rust · Python · TypeScript ▸ IoT/OT · AppSec · native tooling</span>
+              <span class="lang-es">Rust · Python · TypeScript ▸ IoT/OT · AppSec · herramientas nativas</span>
             </p>
             <a class="text-link" href={site.github} target="_blank" rel="noreferrer">
               <span class="lang-en">Explore all repositories</span>

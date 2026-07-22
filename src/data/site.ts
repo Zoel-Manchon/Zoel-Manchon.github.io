@@ -10,12 +10,12 @@ export type Project = {
   year: string;
   featured?: boolean;
   reverse?: boolean;
-  terminal: string;
+  terminal: LocalizedText;
   description: LocalizedText;
-  highlights: string[];
+  highlights: LocalizedText[];
   stack: string[];
   url: string;
-  visual: 'aegis' | 'vault' | 'scan' | 'market' | 'weather' | 'energy' | 'sentinel' | 'emberwall' | 'chain' | 'phosphor';
+  visual: 'aegis' | 'vault' | 'scan' | 'market' | 'weather' | 'energy' | 'sentinel' | 'emberwall' | 'chain' | 'phosphor' | 'agri' | 'maat';
   accent?: string;
 };
 
@@ -52,11 +52,13 @@ export const tickerLines = [
   'ota ▸ firmware v1.4 desplegado · 0 downtime',
   'vault ▸ credenciales rotadas · 0 secretos expuestos',
   'grafana ▸ panel actualizado · 12.4 kWh hoy',
+  'agrisentinel ▸ replay detectado · frame rechazado · soc alert',
+  'maat ▸ buffer ≠ disco · :w bloqueado · audit emitted',
 ];
 
 export const services: Service[] = [
   {
-    number: '07',
+    number: '01',
     title: {
       es: 'Monitorización energética',
       en: 'Energy monitoring',
@@ -115,12 +117,17 @@ export const projects: Project[] = [
     repo: 'emberwall',
     year: '2026',
     featured: true,
-    terminal: 'emberwall — boot · sentinel armado · mqtt tls',
+    terminal: { en: 'emberwall — boot · sentinel armed · mqtt tls', es: 'emberwall — boot · sentinel armado · mqtt tls' },
     description: {
-      es: 'Una distribución Linux entera compilada desde cero con Buildroot: su propio toolchain, kernel endurecido y un userland inmutable de pocos MB — sin gestor de paquetes, con PIE/RELRO/SSP, KASLR, LSMs lockdown+yama y firewall nftables default-deny. Lleva sentinel, una herramienta nativa en Rust que fusiona mi escáner pyscan y el núcleo cripto de AegisVault en un único binario estático: escaneo TCP/UDP con reconocimiento OT/ICS (Modbus, S7comm, IEC-104) más un vault argon2id + XChaCha20. Diseñada para correr como pasarela MQTT segura en el borde.',
-      en: 'A whole Linux distribution built from scratch with Buildroot: its own toolchain, a hardened kernel and a few-MB immutable userland — no package manager, PIE/RELRO/SSP, KASLR, lockdown+yama LSMs and an nftables default-deny firewall. It ships sentinel, a native Rust tool fusing my pyscan scanner and the AegisVault crypto core into a single static binary: TCP/UDP scanning with OT/ICS recognition (Modbus, S7comm, IEC-104) plus an argon2id + XChaCha20 vault. Designed to run as the secure MQTT edge gateway.',
+      es: 'Una distribución Linux entera compilada desde cero con Buildroot: su propio toolchain, kernel endurecido y un userland inmutable de pocos MB — sin gestor de paquetes, con PIE/RELRO/SSP, KASLR, LSMs lockdown+yama y firewall nftables default-deny. Lleva sentinel, una herramienta nativa en Rust que fusiona mi escáner pyscan y el núcleo cripto de AegisVault en un único binario estático: escaneo TCP/UDP con reconocimiento OT/ICS más un vault argon2id + XChaCha20. Diseñada para correr como pasarela MQTT segura en el borde.',
+      en: 'A whole Linux distribution built from scratch with Buildroot: its own toolchain, a hardened kernel and a few-MB immutable userland — no package manager, PIE/RELRO/SSP, KASLR, lockdown+yama LSMs and an nftables default-deny firewall. It ships sentinel, a native Rust tool fusing my pyscan scanner and the AegisVault crypto core into a single static binary: TCP/UDP scanning with OT/ICS recognition plus an argon2id + XChaCha20 vault. Designed to run as the secure MQTT edge gateway.',
     },
-    highlights: ['Buildroot desde cero', 'Kernel + userland endurecidos', 'sentinel: scan + vault en Rust', 'x86-64 y ARM64'],
+    highlights: [
+      { en: 'Buildroot from scratch', es: 'Buildroot desde cero' },
+      { en: 'Hardened kernel + userland', es: 'Kernel + userland endurecidos' },
+      { en: 'sentinel: Rust scan + vault', es: 'sentinel: scan + vault en Rust' },
+      { en: 'x86-64 and ARM64', es: 'x86-64 y ARM64' },
+    ],
     stack: ['Buildroot', 'Rust', 'C', 'Linux', 'nftables'],
     url: 'https://github.com/Zoel-Manchon/emberwall',
     visual: 'emberwall',
@@ -129,41 +136,50 @@ export const projects: Project[] = [
   {
     number: '02',
     title: {
+      es: 'Telemetría que no confía',
+      en: 'Telemetry that trusts nothing',
+    },
+    repo: 'agrisentinel',
+    year: '2026',
+    terminal: { en: 'agrisentinel — signed frame · replay rejected', es: 'agrisentinel — frame firmado · replay rechazado' },
+    description: {
+      es: 'Laboratorio IoT rural que trata la propia red de sensores como superficie de ataque. Cada nodo firma su telemetría con HMAC, secuencia y nonce; el gateway valida cada frame y ejecuta detección de rango, replay, caducidad y frecuencia antes de publicar. Los datos limpios y las alertas viajan por canales MQTT separados hacia dos dashboards Grafana: agronomía y SOC.',
+      en: 'A rural IoT lab that treats the sensor network itself as an attack surface. Every node signs telemetry with HMAC, sequence and nonce; the gateway validates each frame and runs range, replay, stale and rate checks before publishing. Clean data and security alerts travel over separate MQTT streams into two Grafana dashboards: agronomy and SOC.',
+    },
+    highlights: [
+      { en: 'HMAC + anti-replay', es: 'HMAC + anti-replay' },
+      { en: '4 anomaly detectors', es: '4 detectores de anomalía' },
+      { en: 'Agronomy + SOC', es: 'Agronomía + SOC' },
+      { en: '33 tests · CI', es: '33 tests · CI' },
+    ],
+    stack: ['Python', 'MQTT', 'InfluxDB', 'Grafana', 'Hexagonal'],
+    url: 'https://github.com/Zoel-Manchon/agrisentinel',
+    visual: 'agri',
+    accent: '#d59a45',
+  },
+  {
+    number: '03',
+    title: {
       es: 'Centinela de espacios',
       en: 'Space sentinel',
     },
     repo: 'sentinel-node',
     year: '2026',
-    featured: true,
-    terminal: 'sentinel — sala-1 · presencia:sí · ml:on-device',
+    terminal: { en: 'sentinel — room-1 · presence:yes · ml:on-device', es: 'sentinel — sala-1 · presencia:sí · ml:on-device' },
     description: {
-      es: 'Nodo centinela multisensor con ML en el borde: calidad de aire (BME680), presencia mmWave (LD2410), eventos acústicos con TinyML y visión con ESP32-CAM. Los modelos corren en el dispositivo y solo publican el veredicto — ni audio ni imágenes crudas entran nunca en la telemetría. Un espacio simulado coherente alimenta todos los canales desde un mismo horario de ocupación, y 45 tests con funciones de fitness vigilan la arquitectura.',
-      en: 'A multi-sensor sentinel node with ML at the edge: air quality (BME680), mmWave presence (LD2410), acoustic events with TinyML and vision with ESP32-CAM. Models run on-device and publish only the verdict — raw audio and images never enter the telemetry. A coherent simulated space drives every channel from one occupancy schedule, and 45 tests with fitness functions guard the architecture.',
+      es: 'Nodo centinela multisensor con ML en el borde: calidad de aire, presencia mmWave, eventos acústicos con TinyML y visión con ESP32-CAM. Los modelos corren en el dispositivo y solo publican el veredicto — ni audio ni imágenes crudas entran en la telemetría. Un espacio simulado coherente alimenta todos los canales y las funciones de fitness vigilan la arquitectura.',
+      en: 'A multi-sensor sentinel node with ML at the edge: air quality, mmWave presence, acoustic events with TinyML and vision with ESP32-CAM. Models run on-device and publish only the verdict — raw audio and images never enter the telemetry. A coherent simulated space drives every channel and fitness functions guard the architecture.',
     },
-    highlights: ['ML on-device', 'Privacidad por diseño', '4 canales de sensor', '45 tests + fitness'],
+    highlights: [
+      { en: 'On-device ML', es: 'ML on-device' },
+      { en: 'Privacy by design', es: 'Privacidad por diseño' },
+      { en: '4 sensor channels', es: '4 canales de sensor' },
+      { en: '45 tests + fitness', es: '45 tests + fitness' },
+    ],
     stack: ['ESP32-S3', 'TinyML', 'MQTT', 'InfluxDB', 'Hexagonal'],
     url: 'https://github.com/Zoel-Manchon/sentinel-node',
     visual: 'sentinel',
     accent: '#5b9dff',
-  },
-  {
-    number: '03',
-    title: {
-      es: 'Estación solar autónoma',
-      en: 'Self-powered weather station',
-    },
-    repo: 'solar-weather-station',
-    year: '2026',
-    terminal: 'weather-sim — día 14 · 06:42 · cargando',
-    description: {
-      es: 'Estación meteorológica que se alimenta del sol y no depende de nadie: sensores de presión, luz, partículas y lluvia enviando datos por MQTT a InfluxDB y Grafana. Desarrollada simulation-first — un mundo climático virtual valida todo el sistema antes de tocar hardware, así el despliegue físico es solo un cambio de adaptador.',
-      en: 'A weather station that runs on sunlight and depends on no one: pressure, light, particulate and rain sensors streaming over MQTT into InfluxDB and Grafana. Built simulation-first — a virtual weather world validates the whole system before touching hardware, so physical deployment is just an adapter swap.',
-    },
-    highlights: ['Autonomía solar', '4 sensores', 'MQTT → InfluxDB → Grafana', 'Núcleo MicroPython-ready'],
-    stack: ['Python', 'MQTT', 'Node-RED', 'InfluxDB', 'Hexagonal'],
-    url: 'https://github.com/Zoel-Manchon/solar-weather-station',
-    visual: 'weather',
-    accent: '#f0aa4e',
   },
   {
     number: '04',
@@ -173,12 +189,16 @@ export const projects: Project[] = [
     },
     repo: 'eastron-lorawan',
     year: '2026',
-    terminal: 'telemetría — sdm230 · uplink en vivo',
+    terminal: { en: 'telemetry — sdm230 · live uplink', es: 'telemetría — sdm230 · uplink en vivo' },
     description: {
-      es: 'Monitorización eléctrica sobre LoRaWAN: el contador emite, la pila de telemetría procesa, y el consumo aparece en paneles Grafana con histórico de series temporales. La arquitectura de referencia para monitorización energética en pymes.',
-      en: 'Electrical monitoring over LoRaWAN: the meter transmits, the telemetry stack processes, and consumption lands on Grafana dashboards with time-series history. The reference architecture for small-business energy monitoring.',
+      es: 'Monitorización eléctrica sobre LoRaWAN: el contador emite, la pila de telemetría procesa y el consumo aparece en paneles Grafana con histórico de series temporales. Es la referencia más directa para convertir una instalación física en un servicio de observabilidad energética.',
+      en: 'Electrical monitoring over LoRaWAN: the meter transmits, the telemetry stack processes and consumption lands on Grafana dashboards with time-series history. It is the most direct reference for turning a physical installation into an energy-observability service.',
     },
-    highlights: ['Uplinks LoRaWAN', 'Series temporales', 'Paneles Grafana'],
+    highlights: [
+      { en: 'LoRaWAN uplinks', es: 'Uplinks LoRaWAN' },
+      { en: 'Time-series history', es: 'Series temporales' },
+      { en: 'Grafana dashboards', es: 'Paneles Grafana' },
+    ],
     stack: ['LoRaWAN', 'InfluxDB', 'Grafana', 'IoT'],
     url: 'https://github.com/Zoel-Manchon/eastron-lorawan-energy-monitoring',
     visual: 'energy',
@@ -192,12 +212,16 @@ export const projects: Project[] = [
     },
     repo: 'pyscan',
     year: '2026',
-    terminal: '$ sudo pyscan scan 10.0.8.0/24 --top-ports 100',
+    terminal: { en: '$ sudo pyscan scan 10.0.8.0/24 --top-ports 100', es: '$ sudo pyscan scan 10.0.8.0/24 --top-ports 100' },
     description: {
-      es: 'Escáner de protocolos industriales que ve lo que hay realmente conectado a una red de planta: sondas Modbus, IEC-104 y S7comm, escaneo SYN/UDP y captura de tráfico en vivo.',
-      en: 'An industrial-protocol scanner that sees what’s actually connected to a plant network: Modbus, IEC-104 and S7comm probes, SYN/UDP scanning and live traffic capture.',
+      es: 'Escáner modular de redes y protocolos industriales que identifica Modbus, IEC-104 y S7comm, descubre hosts, detecta servicios y puede capturar tráfico en vivo. La arquitectura hexagonal permite añadir nuevas estrategias de escaneo sin contaminar el núcleo.',
+      en: 'A modular network and industrial-protocol scanner that identifies Modbus, IEC-104 and S7comm, discovers hosts, detects services and can capture live traffic. Its hexagonal architecture lets new scan strategies drop in without contaminating the core.',
     },
-    highlights: ['3 protocolos OT', '74 tests · CI', 'Captura pcap en vivo'],
+    highlights: [
+      { en: '3 OT protocols', es: '3 protocolos OT' },
+      { en: '74 tests · CI', es: '74 tests · CI' },
+      { en: 'Live pcap capture', es: 'Captura pcap en vivo' },
+    ],
     stack: ['Python', 'Scapy', 'Textual', 'Hexagonal'],
     url: 'https://github.com/Zoel-Manchon/pyscan',
     visual: 'scan',
@@ -211,12 +235,16 @@ export const projects: Project[] = [
     },
     repo: 'aegis-zero-trust',
     year: '2026',
-    terminal: 'aegis — consola soc · sse:conectado',
+    terminal: { en: 'aegis — soc console · sse:connected', es: 'aegis — consola soc · sse:conectado' },
     description: {
-      es: 'Plataforma de identidad zero-trust con consola de operaciones en vivo: passkeys, rotación de tokens, motor de riesgo y auditoría a prueba de manipulación — más un laboratorio con 10 ataques para ver saltar las defensas. La prueba de que cuando digo "seguro", va en serio.',
-      en: 'A zero-trust identity platform with a live operations console: passkeys, token rotation, a risk engine and tamper-evident audit — plus a lab with 10 attacks to watch the defenses fire. Proof that when I say “secure”, I mean it.',
+      es: 'Plataforma de identidad zero-trust con consola de operaciones en vivo: passkeys, rotación de tokens, motor de riesgo y auditoría encadenada — más un laboratorio con diez ataques para observar cómo responden las defensas.',
+      en: 'A zero-trust identity platform with a live operations console: passkeys, token rotation, a risk engine and hash-chained audit — plus a ten-scenario attack range for watching the defenses respond.',
     },
-    highlights: ['Passkeys WebAuthn', 'Cadena de auditoría', '10 escenarios de ataque'],
+    highlights: [
+      { en: 'WebAuthn passkeys', es: 'Passkeys WebAuthn' },
+      { en: 'Hash-chained audit', es: 'Cadena de auditoría' },
+      { en: '10 attack scenarios', es: '10 escenarios de ataque' },
+    ],
     stack: ['Rust', 'Axum', 'React', 'PostgreSQL', 'Redis'],
     url: 'https://github.com/Zoel-Manchon/aegis-zero-trust',
     visual: 'aegis',
@@ -225,6 +253,30 @@ export const projects: Project[] = [
   {
     number: '07',
     title: {
+      es: 'El vigilante de ficheros',
+      en: 'The file watchman',
+    },
+    repo: 'phosphor',
+    year: '2026',
+    terminal: { en: 'phosphor — guarding · sha-256 · hmac:on', es: 'phosphor — vigilando · sha-256 · hmac:on' },
+    description: {
+      es: 'Monitor de integridad de ficheros de escritorio en Rust con interfaz egui ámbar-CRT. Ancla un baseline SHA-256 firmado con HMAC y vigila una carpeta en tiempo real; cualquier modificación, alta o borrado aparece al instante, con notificación nativa y exportación JSON/CEF para SIEM.',
+      en: 'A desktop file-integrity monitor in Rust with an amber-CRT egui interface. It anchors an HMAC-signed SHA-256 baseline and watches a folder in real time; modifications, additions and deletions surface instantly, with native notifications and JSON/CEF export for SIEM.',
+    },
+    highlights: [
+      { en: 'Live filesystem watch', es: 'Watch en vivo' },
+      { en: 'HMAC-signed baseline', es: 'Baseline firmado HMAC' },
+      { en: 'Native egui GUI', es: 'GUI nativa egui' },
+      { en: 'JSON/CEF export', es: 'Export JSON/CEF' },
+    ],
+    stack: ['Rust', 'egui', 'SHA-256', 'HMAC', 'notify'],
+    url: 'https://github.com/Zoel-Manchon/phosphor',
+    visual: 'phosphor',
+    accent: '#ffb033',
+  },
+  {
+    number: '08',
+    title: {
       es: 'Paneles en vivo',
       en: 'Live dashboards',
     },
@@ -232,55 +284,45 @@ export const projects: Project[] = [
     year: '2026',
     featured: true,
     reverse: true,
-    terminal: 'crypto-watch — btc/eur · ws:streaming',
+    terminal: { en: 'crypto-watch — btc/eur · ws:streaming', es: 'crypto-watch — btc/eur · ws:streaming' },
     description: {
-      es: 'Terminal de mercado en tiempo real: un backend Rust emitiendo precios en vivo por WebSockets a un panel web, con autenticación endurecida y observabilidad completa con Prometheus y Grafana. La misma ingeniería de datos en vivo que piden los sensores, llevada al extremo.',
-      en: 'A real-time market terminal: a Rust backend streaming live prices over WebSockets to a web dashboard, with hardened authentication and full Prometheus + Grafana observability. The same live-data engineering sensor fleets demand, pushed to the limit.',
+      es: 'Terminal de mercado en tiempo real: backend Rust, precios en vivo por WebSockets, persistencia PostgreSQL, autenticación endurecida y observabilidad con Prometheus y Grafana. Demuestra la misma ingeniería de eventos y telemetría que exigen las flotas de sensores, aplicada a un dominio distinto.',
+      en: 'A real-time market terminal: Rust backend, live prices over WebSockets, PostgreSQL persistence, hardened authentication and Prometheus/Grafana observability. It demonstrates the same event and telemetry engineering sensor fleets demand, applied to a different domain.',
     },
-    highlights: ['Streaming WebSocket', 'Argon2id + JWT', 'Prometheus · Grafana'],
+    highlights: [
+      { en: 'WebSocket streaming', es: 'Streaming WebSocket' },
+      { en: 'Argon2id + JWT', es: 'Argon2id + JWT' },
+      { en: 'Prometheus · Grafana', es: 'Prometheus · Grafana' },
+    ],
     stack: ['Rust', 'Axum', 'Astro', 'React', 'PostgreSQL'],
     url: 'https://github.com/Zoel-Manchon/crypto-dashboard',
     visual: 'market',
     accent: '#c8b6ff',
   },
   {
-    number: '08',
-    title: {
-      es: 'Integridad que se ve',
-      en: 'Integrity you can see',
-    },
-    repo: 'toychain',
-    year: '2026',
-    reverse: true,
-    terminal: 'toychain — minando · dificultad 4 · ws:live',
-    description: {
-      es: 'Una blockchain educativa en Ruby on Rails construida para hacer la integridad visible — y atribuible. Minado proof-of-work SHA-256 en jobs de fondo (Solid Queue) con barra de progreso en vivo por Turbo Streams sobre Solid Cable, autenticada en el propio WebSocket. Cada bloque registra quién lo minó; un validador de tres capas rompe la cadena en cascada al manipularla. API JSON con tokens Bearer (solo se guardan digests SHA-256) que consume un verificador Python independiente — don\'t trust, verify.',
-      en: 'An educational blockchain in Ruby on Rails built to make integrity visible — and attributable. SHA-256 proof-of-work mined in background jobs (Solid Queue) with a live progress bar over Turbo Streams on Solid Cable, authenticated at the WebSocket itself. Every block records who mined it; a three-check validator breaks the chain in cascade on tampering. Bearer-token JSON API (only SHA-256 digests stored) consumed by an independent Python verifier — don\'t trust, verify.',
-    },
-    highlights: ['PoW SHA-256 en background', 'Tiempo real multiproceso', 'API Bearer + verificador Python', '~40 tests · CI'],
-    stack: ['Rails 8', 'Ruby', 'Hotwire', 'Solid Queue', 'SQLite'],
-    url: 'https://github.com/Zoel-Manchon/toychain',
-    visual: 'chain',
-    accent: '#ff5db1',
-  },
-  {
     number: '09',
     title: {
-      es: 'El vigilante de ficheros',
-      en: 'The file watchman',
+      es: 'Editar sin sobrescribir a ciegas',
+      en: 'Edit without overwriting blind',
     },
-    repo: 'phosphor',
+    repo: 'maat',
     year: '2026',
-    terminal: 'phosphor — guarding · sha-256 · hmac:on',
+    featured: true,
+    terminal: { en: 'maat — buffer ≠ disk · write blocked', es: 'maat — buffer ≠ disco · guardado bloqueado' },
     description: {
-      es: 'Monitor de integridad de ficheros de escritorio (un mini Tripwire) en Rust con interfaz egui ámbar-CRT. Ancla un baseline SHA-256 de una carpeta y la vigila en tiempo real: un hilo notify transmite eventos del sistema de ficheros por un canal mpsc y cualquier cambio salta al instante, con notificación nativa aunque esté minimizada. El propio baseline va firmado con HMAC-SHA256, así que un atacante que edite un fichero y reescriba el baseline no puede forjar una firma válida sin la clave. Reglas de ignore, re-baseline y export JSON/CEF para SIEM.',
-      en: 'A desktop file integrity monitor (a mini Tripwire) in Rust with an amber-CRT egui interface. Anchor a SHA-256 baseline of a folder and watch it in real time: a notify thread streams filesystem events over an mpsc channel and any change surfaces instantly, with a native notification even while minimized. The baseline itself is HMAC-SHA256 signed, so an attacker who edits a file and rewrites the baseline can\'t forge a valid signature without the key. Ignore rules, re-baseline and JSON/CEF export for SIEM.',
+      es: 'Editor modal retro para terminal escrito en Rust. Maat toma una huella SHA-256 al abrir el archivo, comprueba el disco antes de guardar, bloquea sobrescrituras conflictivas, escribe de forma atómica y emite eventos JSON/CEF. Incluye búsqueda incremental, undo/redo, registros de línea y verificación no interactiva para scripts y appliances.',
+      en: 'A retro modal terminal editor written in Rust. Maat fingerprints the file on open, checks the disk before every save, blocks conflicting overwrites, writes atomically and emits JSON/CEF events. It also includes incremental search, undo/redo, line registers and non-interactive verification for scripts and appliances.',
     },
-    highlights: ['Watch en vivo (notify + mpsc)', 'Baseline firmado HMAC', 'GUI nativa egui', 'Export JSON/CEF'],
-    stack: ['Rust', 'egui', 'SHA-256', 'HMAC', 'notify'],
-    url: 'https://github.com/Zoel-Manchon/phosphor',
-    visual: 'phosphor',
-    accent: '#ffb033',
+    highlights: [
+      { en: '4 modal modes', es: '4 modos modales' },
+      { en: 'SHA-256 + :check', es: 'SHA-256 + :check' },
+      { en: 'Atomic saves', es: 'Guardado atómico' },
+      { en: 'JSON/CEF audit', es: 'Auditoría JSON/CEF' },
+    ],
+    stack: ['Rust', 'ratatui', 'crossterm', 'SHA-256', 'SIEM'],
+    url: 'https://github.com/Zoel-Manchon/maat',
+    visual: 'maat',
+    accent: '#b24a63',
   },
 ];
 
@@ -288,8 +330,8 @@ export const archive: ArchiveEntry[] = [
   {
     name: 'aegisvault',
     description: {
-      en: 'Local-first encrypted secrets manager: Python core, native Rust crypto (Argon2id + XChaCha20), Shamir K-of-N recovery — 96 tests.',
-      es: 'Gestor de secretos cifrado y local-first: núcleo Python, cripto nativa en Rust (Argon2id + XChaCha20), recuperación Shamir K-de-N — 96 tests.',
+      en: 'Local-first encrypted secrets manager: Python core, native Rust crypto, Shamir K-of-N recovery, TOTP and a tamper-evident audit chain.',
+      es: 'Gestor de secretos cifrado y local-first: núcleo Python, cripto nativa en Rust, recuperación Shamir K-de-N, TOTP y auditoría encadenada.',
     },
     tags: ['Python', 'Rust', 'Cryptography'],
     url: 'https://github.com/Zoel-Manchon/aegisvault',
@@ -297,8 +339,8 @@ export const archive: ArchiveEntry[] = [
   {
     name: 'quantlab',
     description: {
-      en: 'Backtesting engine on a full DDD trading domain — CLI, TUI and native GUI over one core, 54 tests in CI.',
-      es: 'Motor de backtesting sobre un dominio de trading DDD completo — CLI, TUI y GUI nativa sobre un mismo núcleo, 54 tests en CI.',
+      en: 'Backtesting engine on a DDD trading domain — CLI, TUI and native GUI over one core.',
+      es: 'Motor de backtesting sobre un dominio de trading DDD — CLI, TUI y GUI nativa sobre un mismo núcleo.',
     },
     tags: ['Python', 'DDD', 'PySide6'],
     url: 'https://github.com/Zoel-Manchon/quantlab',
@@ -306,35 +348,53 @@ export const archive: ArchiveEntry[] = [
   {
     name: 'auth-lab',
     description: {
-      en: 'NestJS zero-trust auth: JWT rotation, TOTP MFA, GeoIP impossible-travel — with an attack simulator that CI-verifies the defenses.',
-      es: 'Autenticación zero-trust en NestJS: rotación JWT, MFA TOTP, GeoIP impossible-travel — con un simulador de ataques que verifica las defensas en CI.',
+      en: 'NestJS zero-trust authentication with JWT rotation, TOTP MFA, GeoIP impossible-travel and a CI-verified attack simulator.',
+      es: 'Autenticación zero-trust en NestJS con rotación JWT, MFA TOTP, GeoIP impossible-travel y simulador de ataques verificado en CI.',
     },
     tags: ['NestJS', 'TypeScript', 'Vault'],
     url: 'https://github.com/Zoel-Manchon/auth-lab',
   },
   {
-    name: 'arch-hardened-server',
+    name: 'solar-weather-station',
     description: {
-      en: 'Security-focused Arch Linux server: system hardening and reduced attack surface, documented end to end.',
-      es: 'Servidor Arch Linux orientado a seguridad: hardening del sistema y superficie de ataque reducida, documentado de principio a fin.',
+      en: 'Simulation-first, solar-powered ESP32 weather station with LoRa, MQTT, Node-RED, InfluxDB and Grafana.',
+      es: 'Estación meteorológica ESP32 solar y simulation-first con LoRa, MQTT, Node-RED, InfluxDB y Grafana.',
+    },
+    tags: ['Python', 'ESP32', 'LoRa'],
+    url: 'https://github.com/Zoel-Manchon/solar-weather-station',
+  },
+  {
+    name: 'toychain',
+    description: {
+      en: 'Educational Rails blockchain with background proof-of-work, attributed tampering and independent Python verification.',
+      es: 'Blockchain educativa en Rails con proof-of-work en background, manipulación atribuida y verificación independiente en Python.',
+    },
+    tags: ['Ruby', 'Rails', 'SHA-256'],
+    url: 'https://github.com/Zoel-Manchon/toychain',
+  },
+  {
+    name: 'arch-linux-hardened-server',
+    description: {
+      en: 'Security-focused Arch Linux server with nftables, SSH hardening and Fail2Ban, documented end to end.',
+      es: 'Servidor Arch Linux orientado a seguridad con nftables, hardening SSH y Fail2Ban, documentado de principio a fin.',
     },
     tags: ['Linux', 'Hardening'],
     url: 'https://github.com/Zoel-Manchon/arch-linux-hardened-server',
   },
   {
-    name: 'api-iot',
+    name: 'api_iot',
     description: {
-      en: 'End-to-end IoT monitor: ESP32 + DHT22 firmware publishing over MQTT to a Node.js backend and a real-time React dashboard.',
-      es: 'Monitor IoT de extremo a extremo: firmware ESP32 + DHT22 publicando por MQTT a un backend Node.js y un panel React en tiempo real.',
+      en: 'End-to-end IoT monitor: ESP32 and DHT22 publishing over MQTT to a Node.js backend and React dashboard.',
+      es: 'Monitor IoT de extremo a extremo: ESP32 y DHT22 publicando por MQTT a un backend Node.js y un panel React.',
     },
     tags: ['ESP32', 'MQTT', 'React'],
     url: 'https://github.com/Zoel-Manchon/api_iot',
   },
   {
-    name: 'smartwatch-lorawan',
+    name: 'Proyecto_IoT_J3_SmartWatch_LoRaWAN',
     description: {
-      en: 'Wearable IoT project with embedded sensors and remote monitoring over LoRaWAN.',
-      es: 'Proyecto IoT wearable con sensores embebidos y monitorización remota sobre LoRaWAN.',
+      en: 'End-to-end LoRaWAN smartwatch platform with embedded sensors, TTN integration and real-time dashboards.',
+      es: 'Plataforma smartwatch LoRaWAN con sensores embebidos, integración TTN y dashboards en tiempo real.',
     },
     tags: ['ESP32', 'LoRaWAN', 'Embedded'],
     url: 'https://github.com/Zoel-Manchon/Proyecto_IoT_J3_SmartWatch_LoRaWAN',
@@ -342,8 +402,8 @@ export const archive: ArchiveEntry[] = [
   {
     name: 'snake-hd',
     description: {
-      en: 'Nokia-era classic rebuilt as a polished arcade game — with a SHA-256 tamper-evident leaderboard on a Rust/Axum service.',
-      es: 'El clásico de la era Nokia reconstruido como arcade pulido — con un marcador a prueba de manipulación (SHA-256) sobre un servicio Rust/Axum.',
+      en: 'Polished Pygame arcade game with custom pixel art and a SHA-256 tamper-evident leaderboard backed by Rust/Axum.',
+      es: 'Arcade pulido en Pygame con pixel art propio y un marcador SHA-256 a prueba de manipulación sobre Rust/Axum.',
     },
     tags: ['Python', 'Pygame', 'Rust'],
     url: 'https://github.com/Zoel-Manchon/snake-hd',

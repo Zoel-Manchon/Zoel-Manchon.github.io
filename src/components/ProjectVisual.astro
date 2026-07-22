@@ -1,8 +1,10 @@
 ---
+import type { LocalizedText } from '@/data/site';
+
 interface Props {
-  variant: 'aegis' | 'vault' | 'scan' | 'market' | 'weather' | 'energy' | 'sentinel' | 'emberwall' | 'chain' | 'phosphor';
+  variant: 'aegis' | 'vault' | 'scan' | 'market' | 'weather' | 'energy' | 'sentinel' | 'emberwall' | 'chain' | 'phosphor' | 'agri' | 'maat';
   label: string;
-  terminal: string;
+  terminal: LocalizedText;
 }
 
 const { variant, label, terminal } = Astro.props;
@@ -12,7 +14,10 @@ const { variant, label, terminal } = Astro.props;
   <div class="visual-window">
     <div class="visual-topbar">
       <span></span><span></span><span></span>
-      <div class="visual-terminal-title">{terminal}</div>
+      <div class="visual-terminal-title">
+        <span class="lang-en">{terminal.en}</span>
+        <span class="lang-es">{terminal.es}</span>
+      </div>
     </div>
 
     {variant === 'aegis' && (
@@ -92,7 +97,7 @@ const { variant, label, terminal } = Astro.props;
         <div class="weather-sensors">
           <div class="sensor-row" style="--d: 0"><span class="sensor-tag">l1</span><i class="scan-bar sensor-accent" style="--bar: 78%"></i><em class="sensor-val">3.42 kW</em></div>
           <div class="sensor-row" style="--d: 1"><span class="sensor-tag">l2</span><i class="scan-bar" style="--bar: 41%"></i><em class="sensor-val">1.18 kW</em></div>
-          <div class="sensor-row" style="--d: 2"><span class="sensor-tag">hoy</span><i class="scan-bar" style="--bar: 56%"></i><em class="sensor-val">12.4 kWh</em></div>
+          <div class="sensor-row" style="--d: 2"><span class="sensor-tag"><span class="lang-en">today</span><span class="lang-es">hoy</span></span><i class="scan-bar" style="--bar: 56%"></i><em class="sensor-val">12.4 kWh</em></div>
         </div>
       </div>
     )}
@@ -110,11 +115,63 @@ const { variant, label, terminal } = Astro.props;
           </svg>
         </div>
         <div class="weather-sensors">
-          <div class="sensor-row" style="--d: 0"><span class="sensor-tag">mmwave</span><i class="scan-bar sensor-accent" style="--bar: 82%"></i><em class="sensor-val">2.4 m · sí</em></div>
+          <div class="sensor-row" style="--d: 0"><span class="sensor-tag">mmwave</span><i class="scan-bar sensor-accent" style="--bar: 82%"></i><em class="sensor-val">2.4 m · <span class="lang-en">yes</span><span class="lang-es">sí</span></em></div>
           <div class="sensor-row" style="--d: 1"><span class="sensor-tag">audio</span><i class="scan-bar" style="--bar: 58%"></i><em class="sensor-val">conf 0.92</em></div>
           <div class="sensor-row" style="--d: 2"><span class="sensor-tag">bme680</span><i class="scan-bar" style="--bar: 44%"></i><em class="sensor-val">iaq 61</em></div>
-          <div class="sensor-row" style="--d: 3"><span class="sensor-tag">cam</span><i class="scan-bar" style="--bar: 30%"></i><em class="sensor-val">local-only</em></div>
+          <div class="sensor-row" style="--d: 3"><span class="sensor-tag">cam</span><i class="scan-bar" style="--bar: 30%"></i><em class="sensor-val"><span class="lang-en">local-only</span><span class="lang-es">solo local</span></em></div>
         </div>
+      </div>
+    )}
+
+    {variant === 'agri' && (
+      <div class="agri-visual-content">
+        <div class="agri-header">
+          <div><span class="agri-dot"></span><b><span class="lang-en">signed telemetry</span><span class="lang-es">telemetría firmada</span></b></div>
+          <em class="live-pill"><span class="lang-en">soc live</span><span class="lang-es">soc activo</span></em>
+        </div>
+        <div class="agri-columns">
+          <div class="agri-stream">
+            <p><span class="lang-en">field / trusted</span><span class="lang-es">campo / confiable</span></p>
+            <div class="agri-frame"><span>soil-07</span><i style="--bar: 74%"></i><em>seq 1842</em></div>
+            <div class="agri-frame"><span>water-02</span><i style="--bar: 56%"></i><em>hmac ✓</em></div>
+            <div class="agri-frame"><span>cattle-11</span><i style="--bar: 68%"></i><em>nonce ✓</em></div>
+          </div>
+          <div class="agri-soc">
+            <p><span class="lang-en">security / rejected</span><span class="lang-es">seguridad / rechazado</span></p>
+            <div class="agri-alert">
+              <span class="lang-en">replay detected</span><span class="lang-es">replay detectado</span>
+              <strong><span class="lang-en">frame dropped</span><span class="lang-es">frame descartado</span></strong>
+            </div>
+            <dl>
+              <div><dt><span class="lang-en">range</span><span class="lang-es">rango</span></dt><dd>pass</dd></div>
+              <div><dt><span class="lang-en">stale</span><span class="lang-es">caducidad</span></dt><dd>pass</dd></div>
+              <div class="is-alert"><dt>replay</dt><dd><span class="lang-en">blocked</span><span class="lang-es">bloqueado</span></dd></div>
+            </dl>
+          </div>
+        </div>
+      </div>
+    )}
+
+    {variant === 'maat' && (
+      <div class="maat-visual-content">
+        <div class="maat-editor-pane">
+          <div class="maat-mode-row"><b>MAAT</b><span>NORMAL</span><em>sha256:on</em></div>
+          <div class="maat-code">
+            <span class="maat-ln">12</span><i>mqtt.tls = true</i>
+            <span class="maat-ln">13</span><i>firewall = "default-deny"</i>
+            <span class="maat-ln active">14</span><i class="active">audit = "cef"</i>
+            <span class="maat-ln">15</span><i>gateway = "edge-01"</i>
+          </div>
+          <div class="maat-warning"><strong><span class="lang-en">EXTERNAL CHANGE</span><span class="lang-es">CAMBIO EXTERNO</span></strong><span><span class="lang-en">:w blocked · run :check</span><span class="lang-es">:w bloqueado · ejecuta :check</span></span></div>
+        </div>
+        <div class="maat-attacker-pane">
+          <p><span class="lang-en">simulated attacker</span><span class="lang-es">atacante simulado</span></p>
+          <code><b>$</b> echo 'audit=off' &gt;&gt; config</code>
+          <code><b>$</b> sha256sum config</code>
+          <span class="maat-hash">9c62…e10b</span>
+          <div class="maat-event"><i></i><span class="lang-en">disk changed</span><span class="lang-es">disco modificado</span></div>
+        </div>
+        <div class="maat-status"><span>buffer 4e43…9e0</span><b>≠</b><span>disk 9c62…e10b</span></div>
       </div>
     )}
 
@@ -185,15 +242,15 @@ const { variant, label, terminal } = Astro.props;
 
     {variant === 'phosphor' && (
       <div class="scan-visual-content phosphor-content">
-        <div class="scan-line prompt-line"><b>◆</b><i style="--w: 46%"></i><em class="live-pill guarding">guarding</em></div>
+        <div class="scan-line prompt-line"><b>◆</b><i style="--w: 46%"></i><em class="live-pill guarding"><span class="lang-en">guarding</span><span class="lang-es">vigilando</span></em></div>
         <div class="scan-row" style="--d: 0">
-          <span class="scan-port">src/</span><i class="scan-bar modified" style="--bar: 70%"></i><em class="scan-tag mod">modified</em>
+          <span class="scan-port">src/</span><i class="scan-bar modified" style="--bar: 70%"></i><em class="scan-tag mod"><span class="lang-en">modified</span><span class="lang-es">modificado</span></em>
         </div>
         <div class="scan-row" style="--d: 1">
-          <span class="scan-port">bin/</span><i class="scan-bar added" style="--bar: 54%"></i><em class="scan-tag add">added</em>
+          <span class="scan-port">bin/</span><i class="scan-bar added" style="--bar: 54%"></i><em class="scan-tag add"><span class="lang-en">added</span><span class="lang-es">añadido</span></em>
         </div>
         <div class="scan-row muted" style="--d: 2">
-          <span class="scan-port">log/</span><i class="scan-bar" style="--bar: 40%"></i><em class="scan-tag">deleted</em>
+          <span class="scan-port">log/</span><i class="scan-bar" style="--bar: 40%"></i><em class="scan-tag"><span class="lang-en">deleted</span><span class="lang-es">eliminado</span></em>
         </div>
         <div class="scan-row" style="--d: 3">
           <span class="scan-port">hmac</span><i class="scan-bar sensor-accent" style="--bar: 92%"></i><em class="scan-tag">signed ✓</em>

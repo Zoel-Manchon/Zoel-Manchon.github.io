@@ -1,0 +1,97 @@
+<section id="demo" class="demo-section site-container" aria-labelledby="demo-title">
+  <div class="section-heading reveal-item">
+    <p class="eyebrow lang-en">Live proof</p>
+    <p class="eyebrow lang-es">Prueba en vivo</p>
+    <h2 id="demo-title">
+      <span class="lang-en">Watch integrity protection stop a blind overwrite.</span>
+      <span class="lang-es">Mira cómo la protección evita una sobrescritura ciega.</span>
+    </h2>
+  </div>
+
+  <div class="demo-showcase reveal-item">
+    <div class="demo-copy">
+      <div class="demo-kicker">
+        <span>MAAT</span>
+        <span class="lang-en">As above, so below</span>
+        <span class="lang-es">Como es arriba, es abajo</span>
+      </div>
+      <h3>
+        <span class="lang-en">The file changes underneath the editor. Maat refuses to overwrite it blindly.</span>
+        <span class="lang-es">El archivo cambia bajo el editor. Maat se niega a sobrescribirlo a ciegas.</span>
+      </h3>
+      <p class="lang-en">
+        A controlled second process tampers with the file on disk. Maat detects the SHA-256 mismatch, blocks the normal save, exposes the conflict through <code>:check</code>, and records the operator’s decision as a structured audit event.
+      </p>
+      <p class="lang-es">
+        Un segundo proceso controlado manipula el archivo en disco. Maat detecta que el SHA-256 ya no coincide, bloquea el guardado normal, muestra el conflicto mediante <code>:check</code> y registra la decisión del operador como evento de auditoría estructurado.
+      </p>
+      <ul class="demo-facts" aria-label="Demo contents">
+        <li><span class="lang-en">modal editing</span><span class="lang-es">edición modal</span></li>
+        <li><span class="lang-en">atomic save</span><span class="lang-es">guardado atómico</span></li>
+        <li><span class="lang-en">external tamper</span><span class="lang-es">manipulación externa</span></li>
+        <li><span class="lang-en">JSON / CEF audit</span><span class="lang-es">auditoría JSON / CEF</span></li>
+      </ul>
+      <div class="demo-links">
+        <button class="demo-play" type="button" data-demo-toggle aria-pressed="false">
+          <span class="demo-play-icon" aria-hidden="true">▶</span>
+          <span class="lang-en demo-label-play">Play demo</span>
+          <span class="lang-es demo-label-play">Ver demo</span>
+          <span class="lang-en demo-label-stop">Reset</span>
+          <span class="lang-es demo-label-stop">Reiniciar</span>
+        </button>
+        <a class="text-link" href="https://github.com/Zoel-Manchon/maat" target="_blank" rel="noreferrer">
+          <span class="lang-en">Open repository</span>
+          <span class="lang-es">Abrir repositorio</span>
+          <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="demo-media" data-demo-media>
+      <img
+        class="demo-image"
+        src="/demos/maat-preview.png"
+        data-poster="/demos/maat-preview.png"
+        data-gif="/demos/maat-demo.gif"
+        width="1200"
+        height="720"
+        loading="lazy"
+        decoding="async"
+        alt="Maat terminal editor beside a simulated attacker, showing an external-change warning and a blocked save."
+      />
+      <div class="demo-media-label" aria-hidden="true">
+        <span class="lang-en">controlled scenario</span>
+        <span class="lang-es">escenario controlado</span>
+        <b class="lang-en">local process · no exploit</b>
+        <b class="lang-es">proceso local · sin exploit</b>
+      </div>
+    </div>
+  </div>
+
+  <div class="demo-more reveal-item">
+    <p>
+      <span class="lang-en">More attack-driven demos live in the repositories:</span>
+      <span class="lang-es">Más demos basadas en ataques dentro de los repositorios:</span>
+    </p>
+    <div>
+      <a href="https://github.com/Zoel-Manchon/agrisentinel" target="_blank" rel="noreferrer">agrisentinel SOC ↗</a>
+      <a href="https://github.com/Zoel-Manchon/aegis-zero-trust" target="_blank" rel="noreferrer">aegis attack range ↗</a>
+      <a href="https://github.com/Zoel-Manchon/emberwall" target="_blank" rel="noreferrer">emberwall live boot ↗</a>
+    </div>
+  </div>
+</section>
+
+<script>
+  const demoButton = document.querySelector<HTMLButtonElement>('[data-demo-toggle]');
+  const demoImage = document.querySelector<HTMLImageElement>('[data-demo-media] img');
+
+  demoButton?.addEventListener('click', () => {
+    if (!demoImage) return;
+
+    const isPlaying = demoButton.getAttribute('aria-pressed') === 'true';
+    const nextSource = isPlaying ? demoImage.dataset.poster : `${demoImage.dataset.gif}?v=${Date.now()}`;
+
+    if (nextSource) demoImage.src = nextSource;
+    demoButton.setAttribute('aria-pressed', String(!isPlaying));
+  });
+</script>
