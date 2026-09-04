@@ -15,7 +15,7 @@ export type Project = {
   highlights: LocalizedText[];
   stack: string[];
   url: string;
-  visual: 'aegis' | 'vault' | 'scan' | 'market' | 'weather' | 'energy' | 'sentinel' | 'emberwall' | 'chain' | 'phosphor' | 'agri' | 'maat';
+  visual: 'aegis' | 'vault' | 'scan' | 'market' | 'weather' | 'energy' | 'sentinel' | 'emberwall' | 'chain' | 'phosphor' | 'agri' | 'maat' | 'keystone' | 'ferrogate';
   accent?: string;
 };
 
@@ -323,6 +323,56 @@ export const projects: Project[] = [
     url: 'https://github.com/Zoel-Manchon/maat',
     visual: 'maat',
     accent: '#b24a63',
+  },
+  {
+    number: '10',
+    title: {
+      es: 'Identidad de flota, no tokens copiables',
+      en: 'Fleet identity, not copyable tokens',
+    },
+    repo: 'keystone',
+    year: '2026',
+    featured: true,
+    terminal: { en: 'keystone — cohort 25% · rollback armed', es: 'keystone — cohorte 25% · rollback armado' },
+    description: {
+      es: 'Plano de control de identidad criptográfica y OTA para flotas IoT. Keystone no recoge telemetría: emite y revoca certificados X.509 desde su propia CA, limita el enrolamiento a tokens de un solo uso, exige prueba de posesión para rotar, firma el firmware con Ed25519 y despliega por cohortes con vuelta atrás. Hexagonal con las capas como módulos Maven, así que la dirección de dependencias la impone el compilador.',
+      en: 'A cryptographic identity and OTA control plane for IoT fleets. Keystone collects no telemetry: it issues and revokes X.509 certificates from its own CA, gates enrolment behind single-use tokens, demands proof of possession to rotate, signs firmware with Ed25519 and rolls out in cohorts with a way back. Hexagonal, with the layers as separate Maven modules so the compiler enforces the dependency direction.',
+    },
+    highlights: [
+      { en: 'Own root + issuing CA', es: 'CA raíz + emisora propias' },
+      { en: 'Proof-of-possession rotation', es: 'Rotación con prueba de posesión' },
+      { en: 'Ed25519-signed firmware', es: 'Firmware firmado Ed25519' },
+      { en: 'Hash-chained audit log', es: 'Auditoría encadenada' },
+    ],
+    stack: ['Java 25', 'Spring Boot 4', 'PostgreSQL', 'Bouncy Castle', 'MQTT 5 mTLS'],
+    url: 'https://github.com/Zoel-Manchon/keystone',
+    visual: 'keystone',
+    accent: '#7c9cff',
+  },
+  {
+    number: '11',
+    title: {
+      es: 'El aislamiento lo impone el motor',
+      en: 'Isolation enforced by the engine',
+    },
+    repo: 'ferrogate',
+    year: '2026',
+    featured: true,
+    terminal: { en: 'ferrogate — cross-tenant query · 0 rows', es: 'ferrogate — consulta entre tenants · 0 filas' },
+    description: {
+      es: 'Telemetría industrial multi-tenant donde la frontera entre clientes la impone PostgreSQL con FORCE ROW LEVEL SECURITY, no acordarse de escribir un WHERE: una consulta que olvida fijar el tenant devuelve cero filas, nunca las de otro. Los gateways hablan Modbus, firman cada envoltorio en el borde y publican por MQTT sobre mTLS; el broker queda fuera de la base de confianza.',
+      en: 'Multi-tenant industrial telemetry where the boundary between customers is enforced by PostgreSQL with FORCE ROW LEVEL SECURITY rather than by remembering to write a WHERE clause: a query that forgets to set the tenant returns zero rows, never somebody else’s. Gateways speak Modbus, sign every envelope at the edge and publish over MQTT on mTLS — the broker is not in the trust base.',
+    },
+    highlights: [
+      { en: 'RLS FORCE per transaction', es: 'RLS FORCE por transacción' },
+      { en: 'Signed at the edge', es: 'Firmado en el borde' },
+      { en: '4 bounded contexts', es: '4 contextos acotados' },
+      { en: 'Import contracts in CI', es: 'Contratos de imports en CI' },
+    ],
+    stack: ['Python', 'PostgreSQL 17', 'InfluxDB', 'Mosquitto', 'Grafana'],
+    url: 'https://github.com/Zoel-Manchon/ferrogate',
+    visual: 'ferrogate',
+    accent: '#4fb3a5',
   },
 ];
 

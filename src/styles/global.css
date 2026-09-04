@@ -2590,3 +2590,309 @@ html[data-lang='es'] .demo-play[aria-pressed='true'] .demo-label-stop.lang-es {
     gap: 12px;
   }
 }
+
+/* ── Keystone: fleet identity + cohort rollout ──────────────────────────── */
+
+.keystone-visual-content {
+  display: flex;
+  height: calc(100% - 32px);
+  padding: 18px;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+  font-family: var(--font-mono);
+}
+
+.ks-fleet {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.ks-head,
+.ks-row {
+  display: grid;
+  align-items: center;
+  gap: 12px;
+  grid-template-columns: 58px 1fr 62px;
+}
+
+.ks-head {
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--visual-ink);
+  opacity: 0.35;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--visual-soft);
+}
+
+.ks-head span:last-child { text-align: center; }
+
+.ks-id {
+  color: var(--visual-ink);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+/* The certificate: a bar of "fingerprint" the row either has or has lost. */
+.ks-cert {
+  position: relative;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--visual-soft);
+  overflow: hidden;
+}
+
+.ks-cert::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 0;
+  border-radius: inherit;
+  background: var(--accent);
+  opacity: 0.85;
+  transition: width 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--d) * 90ms);
+}
+
+.project-link:hover .ks-cert::after {
+  width: 100%;
+}
+
+.project-link:hover .ks-row.pending .ks-cert::after {
+  width: 48%;
+  opacity: 0.45;
+}
+
+/* A revoked device keeps its row and loses its certificate: that is the point. */
+.ks-row.revoked .ks-cert::after {
+  background: #d0432e;
+}
+
+.project-link:hover .ks-row.revoked .ks-cert::after {
+  width: 22%;
+}
+
+.ks-pill {
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 2px 0;
+  border-radius: 999px;
+  border: 1px solid var(--visual-soft);
+  color: var(--visual-ink);
+  opacity: 0.75;
+}
+
+.ks-pill.ok { border-color: color-mix(in srgb, var(--accent) 55%, transparent); }
+.ks-pill.bad { border-color: color-mix(in srgb, #d0432e 65%, transparent); }
+.ks-pill.wait { opacity: 0.45; }
+
+.ks-rollout {
+  display: grid;
+  align-items: center;
+  gap: 8px;
+  grid-template-columns: repeat(3, auto) 1fr;
+}
+
+.ks-stage {
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  padding: 2px 7px;
+  border-radius: 999px;
+  border: 1px solid var(--visual-soft);
+  color: var(--visual-ink);
+  opacity: 0.4;
+}
+
+.ks-stage.done {
+  opacity: 1;
+  border-color: color-mix(in srgb, var(--accent) 55%, transparent);
+}
+
+.ks-progress {
+  position: relative;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--visual-soft);
+  overflow: hidden;
+}
+
+.ks-progress::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 25%;
+  border-radius: inherit;
+  background: var(--accent);
+  transition: width 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.project-link:hover .ks-progress::after {
+  width: 100%;
+}
+
+/* ── Ferrogate: two tenants, two buckets, one barrier ───────────────────── */
+
+.ferrogate-visual-content {
+  display: flex;
+  height: calc(100% - 32px);
+  padding: 18px;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  font-family: var(--font-mono);
+  position: relative;
+}
+
+.fg-head,
+.fg-lane {
+  display: grid;
+  align-items: center;
+  gap: 12px;
+  grid-template-columns: 52px 1fr 20px;
+}
+
+.fg-head {
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--visual-ink);
+  opacity: 0.35;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--visual-soft);
+}
+
+.fg-head span:last-child { justify-self: end; }
+
+.fg-tenant {
+  color: var(--visual-ink);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+/* The flow: a dashed pipe that fills on hover, one lane after the other. */
+.fg-flow {
+  position: relative;
+  height: 9px;
+  border-radius: 999px;
+  background: var(--visual-soft);
+  overflow: hidden;
+}
+
+.fg-flow::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 0;
+  border-radius: inherit;
+  background: var(--accent);
+  opacity: 0.85;
+  transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--d) * 140ms);
+}
+
+.project-link:hover .fg-flow::after {
+  width: 100%;
+}
+
+.fg-bucket {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  border: 1px solid var(--visual-soft);
+  overflow: hidden;
+}
+
+.fg-bucket::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 0;
+  background: var(--accent);
+  opacity: 0.7;
+  transition: height 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--d) * 140ms + 260ms);
+}
+
+.project-link:hover .fg-bucket::after {
+  height: 72%;
+}
+
+/* The barrier sits between the lanes: the reason nothing crosses. */
+.fg-barrier {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 0 64px;
+}
+
+.fg-barrier::before,
+.fg-barrier::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: repeating-linear-gradient(
+    to right,
+    var(--visual-soft) 0 5px,
+    transparent 5px 10px
+  );
+}
+
+.fg-barrier em {
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-style: normal;
+  color: var(--visual-ink);
+  opacity: 0.6;
+}
+
+.fg-footer {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding-top: 10px;
+  border-top: 1px solid var(--visual-soft);
+}
+
+.fg-sig,
+.fg-drop {
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--visual-ink);
+}
+
+.fg-sig {
+  padding: 2px 7px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--accent) 55%, transparent);
+}
+
+.fg-drop { opacity: 0.45; }
+
+.fg-line {
+  flex: 1;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--visual-soft);
+}
+
+@media (max-width: 860px) {
+  /* Four rows plus the rollout do not fit the shorter panel: tighten, keep them all. */
+  .keystone-visual-content {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .ks-fleet { gap: 6px; }
+  .ks-head { padding-bottom: 5px; }
+
+  .ferrogate-visual-content { padding: 14px; }
+}

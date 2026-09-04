@@ -2,7 +2,7 @@
 import type { LocalizedText } from '@/data/site';
 
 interface Props {
-  variant: 'aegis' | 'vault' | 'scan' | 'market' | 'weather' | 'energy' | 'sentinel' | 'emberwall' | 'chain' | 'phosphor' | 'agri' | 'maat';
+  variant: 'aegis' | 'vault' | 'scan' | 'market' | 'weather' | 'energy' | 'sentinel' | 'emberwall' | 'chain' | 'phosphor' | 'agri' | 'maat' | 'keystone' | 'ferrogate';
   label: string;
   terminal: LocalizedText;
 }
@@ -54,6 +54,54 @@ const { variant, label, terminal } = Astro.props;
           <span class="scan-port">22</span><i class="scan-bar" style="--bar: 38%"></i><em class="scan-tag">ssh</em>
         </div>
         <div class="scan-footer"><b class="scan-cursor"></b><i style="--w: 44%"></i></div>
+      </div>
+    )}
+
+    {variant === 'keystone' && (
+      <div class="keystone-visual-content">
+        <div class="ks-head"><span>device</span><span>certificate</span><span>status</span></div>
+        <div class="ks-fleet">
+          <div class="ks-row" style="--d: 0">
+            <b class="ks-id">edge-01</b><i class="ks-cert"></i><em class="ks-pill ok">active</em>
+          </div>
+          <div class="ks-row" style="--d: 1">
+            <b class="ks-id">edge-02</b><i class="ks-cert"></i><em class="ks-pill ok">active</em>
+          </div>
+          <div class="ks-row pending" style="--d: 2">
+            <b class="ks-id">edge-05</b><i class="ks-cert"></i><em class="ks-pill wait">pending</em>
+          </div>
+          <div class="ks-row revoked" style="--d: 3">
+            <b class="ks-id">edge-07</b><i class="ks-cert"></i><em class="ks-pill bad">revoked</em>
+          </div>
+        </div>
+        <div class="ks-rollout">
+          <span class="ks-stage done">5%</span>
+          <span class="ks-stage done">25%</span>
+          <span class="ks-stage">100%</span>
+          <i class="ks-progress"></i>
+        </div>
+      </div>
+    )}
+
+    {variant === 'ferrogate' && (
+      <div class="ferrogate-visual-content">
+        <div class="fg-head"><span>tenant</span><span>signed stream</span><span>bucket</span></div>
+        <div class="fg-lane" style="--d: 0">
+          <b class="fg-tenant">acme</b>
+          <i class="fg-flow"></i>
+          <span class="fg-bucket"></span>
+        </div>
+        <div class="fg-barrier"><em>rls force</em></div>
+        <div class="fg-lane" style="--d: 1">
+          <b class="fg-tenant">globex</b>
+          <i class="fg-flow"></i>
+          <span class="fg-bucket"></span>
+        </div>
+        <div class="fg-footer">
+          <span class="fg-sig">signed</span>
+          <i class="fg-line"></i>
+          <span class="fg-drop">cross-tenant · 0 rows</span>
+        </div>
       </div>
     )}
 
