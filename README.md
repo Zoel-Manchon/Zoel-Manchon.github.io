@@ -1,5 +1,10 @@
 # Zoel Portfolio
 
+[![CI](https://github.com/Zoel-Manchon/Zoel-Manchon.github.io/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/Zoel-Manchon/Zoel-Manchon.github.io/actions/workflows/deploy.yml)
+![Astro](https://img.shields.io/badge/Astro-BC52EE?style=flat-square&logo=astro&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
+![GitHub Pages](https://img.shields.io/badge/GitHub_Pages-222222?style=flat-square&logo=githubpages&logoColor=white)
+
 Minimal bilingual portfolio built with Astro, TypeScript and Tailwind CSS.
 
 ## Current structure
