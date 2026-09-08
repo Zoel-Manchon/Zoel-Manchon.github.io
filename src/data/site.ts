@@ -15,7 +15,7 @@ export type Project = {
   highlights: LocalizedText[];
   stack: string[];
   url: string;
-  visual: 'aegis' | 'vault' | 'scan' | 'market' | 'weather' | 'energy' | 'sentinel' | 'emberwall' | 'chain' | 'phosphor' | 'agri' | 'maat' | 'keystone' | 'ferrogate' | 'psychron';
+  visual: 'aegis' | 'vault' | 'scan' | 'market' | 'weather' | 'energy' | 'sentinel' | 'emberwall' | 'chain' | 'phosphor' | 'agri' | 'maat' | 'keystone' | 'ferrogate' | 'psychron' | 'honeytrap';
   accent?: string;
 };
 
@@ -55,6 +55,8 @@ export const tickerLines = [
   'agrisentinel ▸ replay detectado · frame rechazado · soc alert',
   'maat ▸ buffer ≠ disco · :w bloqueado · audit emitted',
   'psychron ▸ backlog reinyectado · 92 min · forma intacta',
+  'honeytrap ▸ 5 pares de credenciales · una sesión · brute_force',
+  'honeytrap ▸ coap /.well-known/core · respuesta suprimida · ×4.5',
 ];
 
 export const services: Service[] = [
@@ -399,6 +401,31 @@ export const projects: Project[] = [
     url: 'https://github.com/Zoel-Manchon/psychron',
     visual: 'psychron',
     accent: '#4ea8c4',
+  },
+  {
+    number: '13',
+    title: {
+      es: 'Una trampa que se niega a ser un arma',
+      en: 'A trap that refuses to become a weapon',
+    },
+    repo: 'honeytrap',
+    year: '2026',
+    featured: true,
+    terminal: { en: 'honeytrap — reply suppressed · factor 4.5', es: 'honeytrap — respuesta suprimida · factor 4.5' },
+    description: {
+      es: 'Honeypot MQTT/CoAP de baja interacción que emula dispositivos IoT creíbles para capturar y clasificar lo que atraen: credenciales por defecto, suscripciones comodín, enumeración CoAP y paquetes rotos a propósito. El veredicto vive en la sesión, no en el paquete — tres CONNECT aislados no son fuerza bruta hasta que se ven juntos. Y sobre UDP la dirección de origen no está verificada, así que responder convertiría el señuelo en un reflector de DDoS contra un tercero: un techo de amplificación, un cubo de fichas por origen y el rechazo de Proxy-Uri deciden si la respuesta sale. La captura nunca se pierde: el intento es la señal.',
+      en: 'A low-interaction MQTT/CoAP honeypot that emulates believable IoT devices to capture and classify what they attract: default credentials, wildcard harvesting, CoAP enumeration and deliberately malformed packets. The verdict belongs to the session rather than the packet — three isolated CONNECTs are not brute force until you see them together. And over UDP the source address is unverified, so answering would turn the decoy into a DDoS reflector aimed at a third party: an amplification ceiling, a per-source token bucket and a refused Proxy-Uri decide whether a reply goes out. The capture is never lost — the attempt is the signal.',
+    },
+    highlights: [
+      { en: 'Verdicts at session level', es: 'Veredictos a nivel de sesión' },
+      { en: 'Refuses to be a reflector', es: 'Se niega a ser reflector' },
+      { en: 'Committed pcap evidence', es: 'Evidencia pcap commiteada' },
+      { en: 'Write path segmented', es: 'Ruta de escritura segmentada' },
+    ],
+    stack: ['Python', 'asyncio', 'MQTT / CoAP', 'InfluxDB', 'Grafana'],
+    url: 'https://github.com/Zoel-Manchon/honeytrap',
+    visual: 'honeytrap',
+    accent: '#d08a3c',
   },
 ];
 

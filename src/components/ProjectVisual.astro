@@ -2,7 +2,7 @@
 import type { LocalizedText } from '@/data/site';
 
 interface Props {
-  variant: 'aegis' | 'vault' | 'scan' | 'market' | 'weather' | 'energy' | 'sentinel' | 'emberwall' | 'chain' | 'phosphor' | 'agri' | 'maat' | 'keystone' | 'ferrogate' | 'psychron';
+  variant: 'aegis' | 'vault' | 'scan' | 'market' | 'weather' | 'energy' | 'sentinel' | 'emberwall' | 'chain' | 'phosphor' | 'agri' | 'maat' | 'keystone' | 'ferrogate' | 'psychron' | 'honeytrap';
   label: string;
   terminal: LocalizedText;
 }
@@ -244,6 +244,28 @@ const { variant, label, terminal } = Astro.props;
           <span class="lang-en">time from boot anchor</span>
           <span class="lang-es">hora desde ancla de arranque</span>
           <b>mTLS</b>
+        </div>
+      </div>
+    )}
+
+    {variant === 'honeytrap' && (
+      <div class="honeytrap-visual-content">
+        <div class="honeytrap-feed">
+          <div class="honeytrap-line"><i>MQTT</i><span>CONNECT admin / admin</span></div>
+          <div class="honeytrap-line"><i>MQTT</i><span>CONNECT root / root</span></div>
+          <div class="honeytrap-line"><i>MQTT</i><span>CONNECT mqtt / public</span></div>
+          <div class="honeytrap-line is-quiet"><i>CoAP</i><span>GET /.well-known/core</span></div>
+        </div>
+        <div class="honeytrap-verdict">
+          <b>BRUTE_FORCE</b>
+          <span class="lang-en">5 credential pairs · one session</span>
+          <span class="lang-es">5 pares de credenciales · una sesión</span>
+        </div>
+        <div class="honeytrap-footer">
+          <span class="honeytrap-flag">×4.5</span>
+          <span class="lang-en">reply suppressed</span>
+          <span class="lang-es">respuesta suprimida</span>
+          <b>0 bytes</b>
         </div>
       </div>
     )}

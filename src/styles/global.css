@@ -296,6 +296,19 @@ html[data-theme='dark'] .theme-icon-moon {
   justify-content: space-between;
 }
 
+/* Two calls to action now: the demo leads, the catalogue follows. Stacked so
+   the second never competes with the first for the same glance. */
+.hero-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.hero-actions .text-link:last-child {
+  color: var(--text-muted);
+}
+
 .hero-description {
   margin: 0;
   color: var(--text-muted);
@@ -2144,6 +2157,99 @@ html[data-theme='dark'] .visual-window {
 }
 
 /* Maat — buffer/disk correspondence visual */
+/* honeytrap — the attacks go in, one verdict comes out, and the reply does not.
+
+   The three lines are one TCP session on purpose: a conforming broker closes
+   on the second CONNECT, and answering all five is the whole reason the
+   credential list is on the card at all. The footer carries the refusal,
+   because "0 bytes" is the only part of this project a picture can prove. */
+.honeytrap-visual-content {
+  position: relative;
+  display: grid;
+  grid-template-rows: 1fr auto auto;
+  gap: 10px;
+  height: calc(100% - 32px);
+  padding: 15px 15px 24px;
+}
+
+.honeytrap-feed {
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 5px;
+}
+
+.honeytrap-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--visual-ink);
+  opacity: 0.78;
+}
+
+.honeytrap-line i {
+  border: 1px solid var(--visual-soft);
+  padding: 1px 4px;
+  font-style: normal;
+  font-size: 8.5px;
+  letter-spacing: 0.06em;
+  opacity: 0.8;
+}
+
+.honeytrap-line.is-quiet {
+  opacity: 0.42;
+}
+
+.honeytrap-verdict {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  border-left: 2px solid var(--accent);
+  padding-left: 10px;
+}
+
+.honeytrap-verdict b {
+  font-family: var(--font-mono);
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.honeytrap-verdict span {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  color: var(--visual-ink);
+  opacity: 0.6;
+}
+
+.honeytrap-footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.04em;
+  color: var(--visual-ink);
+  opacity: 0.62;
+}
+
+.honeytrap-flag {
+  border: 1px solid var(--visual-soft);
+  padding: 1px 5px;
+  color: var(--accent);
+}
+
+.honeytrap-footer b {
+  margin-left: auto;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+}
+
 /* psychron — the trace with a real hole in it.
 
    The gap is the whole point of the project, so it is the only thing in this

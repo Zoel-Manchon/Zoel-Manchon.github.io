@@ -11,6 +11,63 @@
   <div class="demo-showcase reveal-item">
     <div class="demo-copy">
       <div class="demo-kicker">
+        <span>PSYCHRON</span>
+        <span class="lang-en">Sensor to dashboard</span>
+        <span class="lang-es">Del sensor al panel</span>
+      </div>
+      <h3>
+        <span class="lang-en">A hand over the sensor, and the whole chain moves.</span>
+        <span class="lang-es">Una mano sobre el sensor, y la cadena entera se mueve.</span>
+      </h3>
+      <p class="lang-en">
+        Real hardware on a breadboard: an ESP32 reads a DHT22 and drives an OLED, signs its telemetry with a client certificate and publishes over <code>MQTT</code> on mutual TLS. Humidity climbs on the panel as it climbs on the display. The clip closes on the test suite and the architecture the readings travel through.
+      </p>
+      <p class="lang-es">
+        Hardware real sobre protoboard: un ESP32 lee un DHT22, gobierna una OLED, firma su telemetría con un certificado de cliente y publica por <code>MQTT</code> sobre TLS mutuo. La humedad sube en el panel a la vez que sube en la pantalla. El clip cierra con la suite de tests y la arquitectura por la que viajan las lecturas.
+      </p>
+      <ul class="demo-facts" aria-label="Demo contents">
+        <li><span class="lang-en">physical wiring</span><span class="lang-es">cableado real</span></li>
+        <li><span class="lang-en">live telemetry</span><span class="lang-es">telemetría en vivo</span></li>
+        <li><span class="lang-en">mTLS assertions</span><span class="lang-es">aserciones mTLS</span></li>
+        <li><span class="lang-en">architecture</span><span class="lang-es">arquitectura</span></li>
+      </ul>
+      <div class="demo-links">
+        <a class="text-link" href="https://github.com/Zoel-Manchon/psychron" target="_blank" rel="noreferrer">
+          <span class="lang-en">Open repository</span>
+          <span class="lang-es">Abrir repositorio</span>
+          <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="demo-media demo-media-video">
+      {/* preload="none" on purpose: nothing is fetched until someone presses
+          play, so a visitor who never watches pays nothing for the file. */}
+      <video
+        class="demo-video"
+        controls
+        preload="none"
+        playsinline
+        muted
+        poster="/demos/psychron-poster.jpg"
+        width="1280"
+        height="720"
+      >
+        <source src="/demos/psychron-demo.mp4" type="video/mp4" />
+        <span class="lang-en">Your browser cannot play this video.</span>
+        <span class="lang-es">Tu navegador no puede reproducir este vídeo.</span>
+      </video>
+      <div class="demo-media-label" aria-hidden="true">
+        <span class="lang-en">real hardware</span>
+        <span class="lang-es">hardware real</span>
+        <b>ESP32 · DHT22 · SSD1306</b>
+      </div>
+    </div>
+  </div>
+
+  <div class="demo-showcase reveal-item">
+    <div class="demo-copy">
+      <div class="demo-kicker">
         <span>MAAT</span>
         <span class="lang-en">As above, so below</span>
         <span class="lang-es">Como es arriba, es abajo</span>
@@ -64,63 +121,6 @@
         <span class="lang-es">escenario controlado</span>
         <b class="lang-en">local process · no exploit</b>
         <b class="lang-es">proceso local · sin exploit</b>
-      </div>
-    </div>
-  </div>
-
-  <div class="demo-showcase reveal-item">
-    <div class="demo-copy">
-      <div class="demo-kicker">
-        <span>PSYCHRON</span>
-        <span class="lang-en">Sensor to dashboard</span>
-        <span class="lang-es">Del sensor al panel</span>
-      </div>
-      <h3>
-        <span class="lang-en">A hand over the sensor, and the whole chain moves.</span>
-        <span class="lang-es">Una mano sobre el sensor, y la cadena entera se mueve.</span>
-      </h3>
-      <p class="lang-en">
-        Real hardware on a breadboard: an ESP32 reads a DHT22 and drives an OLED, signs its telemetry with a client certificate and publishes over <code>MQTT</code> on mutual TLS. Humidity climbs on the panel as it climbs on the display. The clip closes on the test suite and the architecture the readings travel through.
-      </p>
-      <p class="lang-es">
-        Hardware real sobre protoboard: un ESP32 lee un DHT22, gobierna una OLED, firma su telemetría con un certificado de cliente y publica por <code>MQTT</code> sobre TLS mutuo. La humedad sube en el panel a la vez que sube en la pantalla. El clip cierra con la suite de tests y la arquitectura por la que viajan las lecturas.
-      </p>
-      <ul class="demo-facts" aria-label="Demo contents">
-        <li><span class="lang-en">physical wiring</span><span class="lang-es">cableado real</span></li>
-        <li><span class="lang-en">live telemetry</span><span class="lang-es">telemetría en vivo</span></li>
-        <li><span class="lang-en">mTLS assertions</span><span class="lang-es">aserciones mTLS</span></li>
-        <li><span class="lang-en">architecture</span><span class="lang-es">arquitectura</span></li>
-      </ul>
-      <div class="demo-links">
-        <a class="text-link" href="https://github.com/Zoel-Manchon/psychron" target="_blank" rel="noreferrer">
-          <span class="lang-en">Open repository</span>
-          <span class="lang-es">Abrir repositorio</span>
-          <span aria-hidden="true">↗</span>
-        </a>
-      </div>
-    </div>
-
-    <div class="demo-media demo-media-video">
-      {/* preload="none" on purpose: nothing is fetched until someone presses
-          play, so a visitor who never watches pays nothing for the file. */}
-      <video
-        class="demo-video"
-        controls
-        preload="none"
-        playsinline
-        muted
-        poster="/demos/psychron-poster.jpg"
-        width="1280"
-        height="720"
-      >
-        <source src="/demos/psychron-demo.mp4" type="video/mp4" />
-        <span class="lang-en">Your browser cannot play this video.</span>
-        <span class="lang-es">Tu navegador no puede reproducir este vídeo.</span>
-      </video>
-      <div class="demo-media-label" aria-hidden="true">
-        <span class="lang-en">real hardware</span>
-        <span class="lang-es">hardware real</span>
-        <b>ESP32 · DHT22 · SSD1306</b>
       </div>
     </div>
   </div>

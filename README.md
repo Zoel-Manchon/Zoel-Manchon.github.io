@@ -9,9 +9,9 @@ Minimal bilingual portfolio built with Astro, TypeScript and Tailwind CSS.
 
 ## Current structure
 
-- Nine selected case studies, focused on secure end-to-end systems.
+- Thirteen selected case studies, focused on secure end-to-end systems.
 - All current project repositories represented once across selected work and the full index.
-- Maat embedded demo with click-to-load playback, so the 2 MB GIF is not requested until the visitor chooses to watch it.
+- Live proof sits above the project grid: the Psychron hardware clip first, then the Maat demo. The video is `preload="none"` and the 2 MB Maat GIF is not requested until the visitor presses play.
 - Links to the Agrisentinel SOC, Aegis attack range and Emberwall live-boot demos.
 - Dark and light themes with saved preference.
 - English and Spanish content with saved preference.
@@ -19,9 +19,9 @@ Minimal bilingual portfolio built with Astro, TypeScript and Tailwind CSS.
 - Geist and Archivo variable fonts, self-hosted through Fontsource.
 - Static output ready for GitHub Pages.
 
-## Selected work strategy
+## Selected work order
 
-The selected grid prioritizes the projects that best support the portfolio narrative:
+The grid runs newest first, so the projects carrying the current narrative lead:
 
 1. Emberwall
 2. Agrisentinel
@@ -32,8 +32,12 @@ The selected grid prioritizes the projects that best support the portfolio narra
 7. Phosphor
 8. Crypto Dashboard
 9. Maat
+10. Keystone
+11. Ferrogate
+12. Psychron
+13. HoneyTrap
 
-Solar Weather Station and Toychain remain visible in the full index rather than disappearing from the portfolio.
+Nine further repositories stay visible in the full index rather than disappearing from the portfolio.
 
 ## Run locally
 
@@ -59,10 +63,12 @@ npm run preview
 - `src/data/site.ts`: project selection, descriptions, stacks, repository links and ticker messages.
 - `src/pages/index.astro`: page structure and general copy.
 - `src/components/ProjectVisual.astro`: custom project mockups.
-- `src/components/LiveDemo.astro`: Maat demo showcase and playback behavior.
+- `src/components/LiveDemo.astro`: the Psychron clip, the Maat demo and its playback behaviour.
 - `src/styles/global.css`: global visual system and responsive styles.
-- `public/demos/`: local demo poster and GIF.
+- `public/demos/`: local demo poster, GIF and video.
 
 ## Deployment
 
-Push to the `main` branch of `Zoel-Manchon/Zoel-Manchon.github.io`. The included GitHub Actions workflow builds the static site and deploys `dist` to GitHub Pages.
+Push to the `main` branch of `Zoel-Manchon/Zoel-Manchon.github.io`. The included GitHub Actions workflow typechecks, builds the static site and deploys `dist` to GitHub Pages.
+
+The workflow grants no permissions by default: the build job holds `contents: read` only, and the token that can publish a deployment lives in the deploy job, which installs nothing. Dependency versions are range-pinned rather than `latest`, so a fresh install cannot cross a major version on its own.

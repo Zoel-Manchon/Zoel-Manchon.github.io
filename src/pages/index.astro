@@ -42,11 +42,18 @@ import { projects, site, tickerLines, archive, services } from '@/data/site';
             Construyo sistemas completos — firmware, telemetría, backend, herramientas de seguridad y apps nativas — con la seguridad como parte del diseño, no como parche. Disponible para incorporarme a un equipo o para proyectos por encargo.
           </p>
 
-          <a class="text-link" href="#work">
-            <span class="lang-en">View selected work</span>
-            <span class="lang-es">Ver proyectos seleccionados</span>
-            <span aria-hidden="true">↓</span>
-          </a>
+          <div class="hero-actions">
+            <a class="text-link" href="#demo">
+              <span class="lang-en">See it working</span>
+              <span class="lang-es">Verlo funcionando</span>
+              <span aria-hidden="true">↓</span>
+            </a>
+            <a class="text-link" href="#work">
+              <span class="lang-en">View selected work</span>
+              <span class="lang-es">Ver proyectos seleccionados</span>
+              <span aria-hidden="true">↓</span>
+            </a>
+          </div>
         </div>
 
         <div class="telemetry-ticker reveal-item" aria-hidden="true">
@@ -54,6 +61,8 @@ import { projects, site, tickerLines, archive, services } from '@/data/site';
           <span id="ticker-line" class="ticker-line">{tickerLines[0]}</span>
         </div>
       </section>
+
+      <LiveDemo />
 
       <section id="work" class="work-section site-container" aria-labelledby="work-title">
         <div class="section-heading reveal-item">
@@ -69,8 +78,6 @@ import { projects, site, tickerLines, archive, services } from '@/data/site';
           {projects.map((project) => <ProjectCard project={project} />)}
         </div>
       </section>
-
-      <LiveDemo />
 
       <section id="services" class="services-section site-container" aria-labelledby="services-title">
         <div class="section-heading reveal-item">
