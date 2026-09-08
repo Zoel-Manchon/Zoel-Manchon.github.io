@@ -15,7 +15,7 @@ export type Project = {
   highlights: LocalizedText[];
   stack: string[];
   url: string;
-  visual: 'aegis' | 'vault' | 'scan' | 'market' | 'weather' | 'energy' | 'sentinel' | 'emberwall' | 'chain' | 'phosphor' | 'agri' | 'maat' | 'keystone' | 'ferrogate';
+  visual: 'aegis' | 'vault' | 'scan' | 'market' | 'weather' | 'energy' | 'sentinel' | 'emberwall' | 'chain' | 'phosphor' | 'agri' | 'maat' | 'keystone' | 'ferrogate' | 'psychron';
   accent?: string;
 };
 
@@ -54,6 +54,7 @@ export const tickerLines = [
   'grafana ▸ panel actualizado · 12.4 kWh hoy',
   'agrisentinel ▸ replay detectado · frame rechazado · soc alert',
   'maat ▸ buffer ≠ disco · :w bloqueado · audit emitted',
+  'psychron ▸ backlog reinyectado · 92 min · forma intacta',
 ];
 
 export const services: Service[] = [
@@ -373,6 +374,31 @@ export const projects: Project[] = [
     url: 'https://github.com/Zoel-Manchon/ferrogate',
     visual: 'ferrogate',
     accent: '#4fb3a5',
+  },
+  {
+    number: '12',
+    title: {
+      es: 'El sensor no tiene reloj',
+      en: 'The sensor has no clock',
+    },
+    repo: 'psychron',
+    year: '2026',
+    featured: true,
+    terminal: { en: 'psychron — backlog replayed · shape intact', es: 'psychron — backlog reinyectado · forma intacta' },
+    description: {
+      es: 'Estación ambiental de extremo a extremo. El nodo no sabe qué hora es: solo cuánto lleva encendido, y tras un corte vuelve a contar desde cero. Por eso el contrato de datos lleva el uptime, siempre válido, junto a un reloj de pared que puede ser nulo — la ingesta ancla cada arranque una vez y reconstruye el resto. Un backlog reinyectado conserva su forma en lugar de aplastarse contra el instante de llegada. Todo lo demás sale de proteger ese registro: mTLS de extremo a extremo sin escucha en claro a la que caer, identidad de lectura por (dispositivo, arranque, secuencia) y huecos deducidos de los datos, nunca interpolados.',
+      en: 'An end-to-end environmental station. The node does not know the time — only how long it has been running, and after a power cut it counts from zero again. So the wire contract carries uptime, always valid, alongside a wall clock that may legitimately be null: ingestion anchors each boot once and reconstructs the rest. A replayed backlog keeps its shape instead of collapsing onto its arrival instant. Everything else follows from protecting that record: mutual TLS end to end with no plaintext listener to fall back to, (device, boot, seq) as the identity of a reading, and gaps found from the data rather than interpolated away.',
+    },
+    highlights: [
+      { en: 'Boot-anchored timestamps', es: 'Sellado por ancla de arranque' },
+      { en: 'mTLS, no plaintext port', es: 'mTLS, sin puerto en claro' },
+      { en: 'Digest-verified OTA', es: 'OTA verificada por hash' },
+      { en: 'Gaps drawn as gaps', es: 'Huecos dibujados como huecos' },
+    ],
+    stack: ['ESP32', 'Arduino C++', 'FastAPI', 'TimescaleDB', 'MQTT mTLS'],
+    url: 'https://github.com/Zoel-Manchon/psychron',
+    visual: 'psychron',
+    accent: '#4ea8c4',
   },
 ];
 

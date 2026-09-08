@@ -2144,6 +2144,110 @@ html[data-theme='dark'] .visual-window {
 }
 
 /* Maat — buffer/disk correspondence visual */
+/* psychron — the trace with a real hole in it.
+
+   The gap is the whole point of the project, so it is the only thing in this
+   card drawn twice: once as a band across the plot and once as a mark on the
+   axis, because at card size a two-minute outage is a hairline and the band
+   alone would vanish. */
+.psychron-visual-content {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 10px;
+  height: calc(100% - 32px);
+  padding: 15px 15px 24px;
+}
+
+.psychron-readout {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+}
+
+.psychron-readout div {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.psychron-readout b {
+  font-family: var(--font-mono);
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--visual-ink);
+  line-height: 1;
+}
+
+.psychron-readout b.secondary {
+  font-size: 22px;
+  font-weight: 400;
+  opacity: 0.78;
+}
+
+.psychron-readout span {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--visual-soft-ink, var(--visual-ink));
+  opacity: 0.6;
+}
+
+.psychron-readout .live-pill {
+  margin-left: auto;
+}
+
+.psychron-chart {
+  min-height: 0;
+}
+
+.psychron-chart svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.psychron-trace {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.psychron-gap {
+  fill: var(--visual-soft);
+  opacity: 0.55;
+}
+
+.psychron-gap-mark {
+  fill: var(--visual-ink);
+  opacity: 0.75;
+}
+
+.psychron-footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.04em;
+  color: var(--visual-ink);
+  opacity: 0.62;
+}
+
+.psychron-flag {
+  border: 1px solid var(--visual-soft);
+  padding: 1px 5px;
+  color: var(--accent);
+}
+
+.psychron-footer b {
+  margin-left: auto;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+}
+
 .maat-visual-content {
   position: relative;
   display: grid;
@@ -2336,11 +2440,34 @@ html[data-theme='dark'] .visual-window {
   grid-template-columns: minmax(300px, 0.76fr) minmax(0, 1.24fr);
 }
 
+/* Two showcases now, so they need air between them. Set on the sibling rather
+   than as a bottom margin, so a single showcase still sits flush. */
+.demo-showcase + .demo-showcase {
+  margin-top: 26px;
+}
+
 .demo-copy {
   display: flex;
   padding: 40px;
   flex-direction: column;
   border-right: 1px solid var(--line);
+}
+
+/* Sized like the still it replaces: the media panel is a fixed frame and the
+   clip is letterboxed inside it rather than cropped. */
+/* The native control bar owns the bottom edge, so the caption moves to the top
+   corner rather than fighting it for the same 40 pixels. */
+.demo-media-video .demo-media-label {
+  top: 14px;
+  bottom: auto;
+}
+
+.demo-video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #0d0a0f;
 }
 
 .demo-kicker {

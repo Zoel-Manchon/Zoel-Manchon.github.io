@@ -2,7 +2,7 @@
 import type { LocalizedText } from '@/data/site';
 
 interface Props {
-  variant: 'aegis' | 'vault' | 'scan' | 'market' | 'weather' | 'energy' | 'sentinel' | 'emberwall' | 'chain' | 'phosphor' | 'agri' | 'maat' | 'keystone' | 'ferrogate';
+  variant: 'aegis' | 'vault' | 'scan' | 'market' | 'weather' | 'energy' | 'sentinel' | 'emberwall' | 'chain' | 'phosphor' | 'agri' | 'maat' | 'keystone' | 'ferrogate' | 'psychron';
   label: string;
   terminal: LocalizedText;
 }
@@ -220,6 +220,31 @@ const { variant, label, terminal } = Astro.props;
           <div class="maat-event"><i></i><span class="lang-en">disk changed</span><span class="lang-es">disco modificado</span></div>
         </div>
         <div class="maat-status"><span>buffer 4e43…9e0</span><b>≠</b><span>disk 9c62…e10b</span></div>
+      </div>
+    )}
+
+    {variant === 'psychron' && (
+      <div class="psychron-visual-content">
+        <div class="psychron-readout">
+          <div><b>23.4</b><span>°C</span></div>
+          <div><b class="secondary">61.5</b><span>%</span></div>
+          <em class="live-pill">live</em>
+        </div>
+        <div class="psychron-chart">
+          <svg viewBox="0 0 420 120" preserveAspectRatio="none" aria-hidden="true">
+            <path class="chart-grid" d="M0 30H420M0 60H420M0 90H420M84 0V120M168 0V120M252 0V120M336 0V120" />
+            <rect class="psychron-gap" x="196" y="0" width="26" height="120" />
+            <path class="psychron-trace draw-on-hover" d="M0 84 C28 80 52 66 84 70 S140 88 196 62" />
+            <path class="psychron-trace draw-on-hover" d="M222 58 C250 54 286 70 320 46 S388 26 420 34" />
+            <rect class="psychron-gap-mark" x="196" y="112" width="26" height="6" />
+          </svg>
+        </div>
+        <div class="psychron-footer">
+          <span class="psychron-flag">0x0100</span>
+          <span class="lang-en">time from boot anchor</span>
+          <span class="lang-es">hora desde ancla de arranque</span>
+          <b>mTLS</b>
+        </div>
       </div>
     )}
 
