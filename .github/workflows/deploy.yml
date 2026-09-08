@@ -1,4 +1,4 @@
-# Despliega el portfolio a GitHub Pages en cada push a main.
+# Builds the portfolio and deploys it to GitHub Pages on every push to main.
 name: Deploy to GitHub Pages
 
 on:
@@ -6,10 +6,10 @@ on:
     branches: [main]
   workflow_dispatch:
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+# No permissions by default: each job asks for exactly what it needs. The
+# build job installs third-party packages and runs their lifecycle scripts,
+# so it must not hold the token that can publish a deployment.
+permissions: {}
 
 concurrency:
   group: pages
@@ -18,14 +18,28 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Do not leave a credential in .git/config for dependency install
+          # scripts to find. Nothing after this step needs to talk to git.
+          persist-credentials: false
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
+
       - run: npm ci
+
+      # Types are checked before the artifact is built: without this a type
+      # error reaches production, because `astro build` does not typecheck.
+      - run: npm run check
+
       - run: npm run build
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
@@ -33,6 +47,9 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
