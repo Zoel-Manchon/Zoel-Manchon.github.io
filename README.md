@@ -9,9 +9,10 @@ Minimal bilingual portfolio built with Astro, TypeScript and Tailwind CSS.
 
 ## Current structure
 
-- Thirteen selected case studies, focused on secure end-to-end systems.
-- All current project repositories represented once across selected work and the full index.
-- Live proof sits above the project grid: the Psychron hardware clip first, then the Maat demo. The video is `preload="none"` and the 2 MB Maat GIF is not requested until the visitor presses play.
+- Thirteen systems presented as dossier entries rather than cards: identifier, claim, description, the line the system prints when it runs, and what it is built from. Every entry is the same five bands in the same order, so any two projects can be compared on the same axis.
+- No invented interface mockups. The material on the page is material that is already true.
+- Evidence section above the index, holding two proofs of deliberately different kinds: a clip of real hardware, and verbatim classifier output from the honeypot. A moving image and a block of text cannot compete for the same glance; two identical showcase boxes did.
+- The video is `preload="none"` — nothing is fetched until a visitor presses play.
 - Links to the Agrisentinel SOC, Aegis attack range and Emberwall live-boot demos.
 - Dark and light themes with saved preference.
 - English and Spanish content with saved preference.
@@ -62,10 +63,10 @@ npm run preview
 
 - `src/data/site.ts`: project selection, descriptions, stacks, repository links and ticker messages.
 - `src/pages/index.astro`: page structure and general copy.
-- `src/components/ProjectVisual.astro`: custom project mockups.
-- `src/components/LiveDemo.astro`: the Psychron clip, the Maat demo and its playback behaviour.
+- `src/components/ProjectEntry.astro`: a project rendered as a dossier entry.
+- `src/components/Evidence.astro`: the hardware clip and the captured classifier output.
 - `src/styles/global.css`: global visual system and responsive styles.
-- `public/demos/`: local demo poster, GIF and video.
+- `public/demos/`: the hardware clip and its poster.
 
 ## Deployment
 

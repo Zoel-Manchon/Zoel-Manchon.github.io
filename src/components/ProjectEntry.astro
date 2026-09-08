@@ -1,0 +1,61 @@
+---
+/*
+ * A project as a dossier entry rather than a card.
+ *
+ * The card grid drew an invented interface for every project — 365 lines of SVG
+ * describing panels that do not exist. This uses only material that is already
+ * true: the identifier, the year, the protocols, the claim, and the line the
+ * system actually prints. Nothing here is decoration standing in for evidence.
+ */
+import type { Project } from '@/data/site';
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+---
+
+<article
+  class="entry reveal-item"
+  style={project.accent ? `--accent: ${project.accent}; --accent-soft: ${project.accent}22;` : undefined}
+>
+  <div class="entry-rail">
+    <span class="entry-number">{project.number}</span>
+    <span class="entry-repo">{project.repo}</span>
+    <span class="entry-year">{project.year}</span>
+  </div>
+
+  <div class="entry-body">
+    <a class="entry-title" href={project.url} target="_blank" rel="noreferrer">
+      <h3>
+        <span class="lang-en">{project.title.en}</span>
+        <span class="lang-es">{project.title.es}</span>
+      </h3>
+      <span class="entry-arrow" aria-hidden="true">↗</span>
+    </a>
+
+    <p class="entry-description lang-en">{project.description.en}</p>
+    <p class="entry-description lang-es">{project.description.es}</p>
+
+    <p class="entry-evidence">
+      <span class="entry-label lang-en">output</span>
+      <span class="entry-label lang-es">salida</span>
+      <code class="lang-en">{project.terminal.en}</code>
+      <code class="lang-es">{project.terminal.es}</code>
+    </p>
+
+    <ul class="entry-highlights" aria-label="Highlights">
+      {project.highlights.map((highlight) => (
+        <li>
+          <span class="lang-en">{highlight.en}</span>
+          <span class="lang-es">{highlight.es}</span>
+        </li>
+      ))}
+    </ul>
+
+    <ul class="entry-stack" aria-label="Technologies">
+      {project.stack.map((technology) => <li>{technology}</li>)}
+    </ul>
+  </div>
+</article>

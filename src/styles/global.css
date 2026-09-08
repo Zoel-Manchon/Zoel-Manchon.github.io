@@ -22,6 +22,7 @@
   --visual-faint: rgba(17, 17, 17, 0.055);
   --accent: #1f5fa8;
   --accent-soft: rgba(31, 95, 168, 0.12);
+  --hot: #a8323f;
   color-scheme: light;
 }
 
@@ -41,6 +42,7 @@ html[data-theme='dark'] {
   --visual-faint: rgba(255, 255, 255, 0.055);
   --accent: #5b9dff;
   --accent-soft: rgba(91, 157, 255, 0.16);
+  --hot: #ff6f7d;
   color-scheme: dark;
 }
 
@@ -2532,43 +2534,196 @@ html[data-theme='dark'] .visual-window {
   color: var(--accent);
 }
 
-/* Embedded demo — loaded only after an explicit click */
-.demo-section {
+/* The index of systems — a dossier, not a card grid.
+
+   Every entry is the same five bands in the same order: identity, claim,
+   description, the line the system prints, and what it is made of. Reading
+   down the page you can compare any two projects on the same axis, which a
+   grid of decorated cards never allows. The rule above each entry is the only
+   ornament, and it is doing work: it is the file separator. */
+.entry-index {
+  display: grid;
+  border-bottom: 1px solid var(--line);
+}
+
+.entry {
+  display: grid;
+  gap: 40px;
+  padding-block: 46px;
+  border-top: 1px solid var(--line);
+  grid-template-columns: 176px minmax(0, 1fr);
+  transition: background-color 200ms ease;
+}
+
+.entry:hover {
+  background-color: var(--visual-faint);
+}
+
+/* The rail is the file header: number, name, year. Mono, small, quiet — it
+   identifies the record without competing with the claim beside it. */
+.entry-rail {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+
+.entry-number {
+  color: var(--accent);
+}
+
+.entry-repo {
+  color: var(--text);
+  font-size: 13px;
+}
+
+.entry-year {
+  color: var(--text-muted);
+}
+
+.entry-body {
+  min-width: 0;
+}
+
+/* Bounded to the width of the prose below it: with the whole column to play
+   with, the arrow drifted to the far edge and stopped reading as part of the
+   title it belongs to. */
+.entry-title {
+  display: flex;
+  max-width: 78ch;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.entry-title h3 {
+  margin: 0;
+  max-width: 22ch;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.5vw, 2.05rem);
+  font-weight: 620;
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+  transition: color 180ms ease;
+}
+
+.entry-title:hover h3,
+.entry-title:focus-visible h3 {
+  color: var(--accent);
+}
+
+.entry-arrow {
+  color: var(--text-muted);
+  font-size: 15px;
+  transition: color 180ms ease, transform 180ms ease;
+}
+
+.entry-title:hover .entry-arrow {
+  color: var(--accent);
+  transform: translate(2px, -2px);
+}
+
+.entry-description {
+  max-width: 78ch;
+  margin: 18px 0 0;
+  color: var(--text-muted);
+  font-size: 14.5px;
+  line-height: 1.62;
+}
+
+/* What the system prints when it runs. It is set apart because it is the one
+   line on the entry that is not a claim about the work. */
+.entry-evidence {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 12px;
+  margin: 22px 0 0;
+  border-left: 2px solid var(--accent);
+  padding: 2px 0 2px 12px;
+}
+
+.entry-label {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.entry-evidence code {
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  opacity: 0.86;
+}
+
+.entry-highlights,
+.entry-stack {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.entry-highlights {
+  gap: 8px 26px;
+  margin-top: 22px;
+}
+
+.entry-highlights li {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+.entry-highlights li::before {
+  margin-right: 7px;
+  color: var(--accent);
+  content: '·';
+}
+
+.entry-stack {
+  gap: 7px;
+  margin-top: 18px;
+}
+
+.entry-stack li {
+  border: 1px solid var(--line);
+  padding: 3px 9px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 10px;
+}
+
+/* Evidence — two proofs of deliberately different kinds.
+
+   The old section stacked two showcases of identical shape, which gave the eye
+   nothing to rank: same grid, same border, same media size. Here the clip is
+   media-led and runs the full width, and the classifier output is text-led
+   under a metadata rail. Different shapes cannot compete for the same glance. */
+.proof-section {
   padding-block: 148px;
   border-bottom: 1px solid var(--line);
 }
 
-.demo-showcase {
-  display: grid;
+.proof-primary {
+  margin: 0;
+}
+
+.proof-frame {
   overflow: hidden;
   border: 1px solid var(--line);
-  background: var(--surface);
-  grid-template-columns: minmax(300px, 0.76fr) minmax(0, 1.24fr);
+  aspect-ratio: 16 / 9;
+  background: #0d0a0f;
 }
 
-/* Two showcases now, so they need air between them. Set on the sibling rather
-   than as a bottom margin, so a single showcase still sits flush. */
-.demo-showcase + .demo-showcase {
-  margin-top: 26px;
-}
-
-.demo-copy {
-  display: flex;
-  padding: 40px;
-  flex-direction: column;
-  border-right: 1px solid var(--line);
-}
-
-/* Sized like the still it replaces: the media panel is a fixed frame and the
-   clip is letterboxed inside it rather than cropped. */
-/* The native control bar owns the bottom edge, so the caption moves to the top
-   corner rather than fighting it for the same 40 pixels. */
-.demo-media-video .demo-media-label {
-  top: 14px;
-  bottom: auto;
-}
-
-.demo-video {
+.proof-video {
   display: block;
   width: 100%;
   height: 100%;
@@ -2576,151 +2731,84 @@ html[data-theme='dark'] .visual-window {
   background: #0d0a0f;
 }
 
-.demo-kicker {
+/* The instrument bar: identity, protocols and the way out, all mono at one
+   size, so it reads as a caption on a plate rather than a second headline. */
+.proof-rail {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 10px;
+  gap: 18px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
   color: var(--text-muted);
   font-family: var(--font-mono);
   font-size: 10px;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-}
-
-.demo-kicker > span:first-child {
-  color: var(--accent);
-  font-weight: 650;
-  letter-spacing: 0.12em;
-}
-
-.demo-copy h3 {
-  margin: 30px 0 18px;
-  font-family: var(--font-display);
-  font-size: clamp(1.8rem, 3vw, 3rem);
-  font-weight: 620;
-  font-variation-settings: 'wdth' 94;
-  letter-spacing: -0.027em;
-  line-height: 1.02;
-}
-
-.demo-copy > p {
-  margin: 0;
-  color: var(--text-muted);
-  font-size: 14px;
-  letter-spacing: -0.014em;
-  line-height: 1.62;
-}
-
-.demo-copy code {
-  color: var(--text);
-  font-family: var(--font-mono);
-  font-size: 0.9em;
-}
-
-.demo-facts {
-  display: flex;
-  margin: 28px 0 32px;
-  padding: 0;
-  flex-wrap: wrap;
-  gap: 7px;
-  list-style: none;
-}
-
-.demo-facts li {
-  padding: 5px 9px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  color: var(--text-muted);
-  font-family: var(--font-mono);
-  font-size: 9.5px;
-}
-
-.demo-links {
-  display: flex;
-  margin-top: auto;
-  align-items: center;
-  gap: 22px;
-}
-
-.demo-play {
-  display: inline-flex;
-  min-height: 42px;
-  padding: 0 17px;
-  cursor: pointer;
-  align-items: center;
-  gap: 9px;
-  border: 1px solid var(--text);
-  border-radius: 999px;
-  background: var(--text);
-  color: var(--background);
-  font-size: 12px;
-  font-weight: 560;
-  transition: transform 180ms ease, opacity 180ms ease;
-}
-
-.demo-play:hover {
-  transform: translateY(-2px);
-}
-
-.demo-play-icon {
-  font-size: 9px;
-}
-
-.demo-play[aria-pressed='true'] .demo-play-icon {
-  transform: rotate(90deg);
-}
-
-.demo-label-stop {
-  display: none !important;
-}
-
-html[data-lang='en'] .demo-play[aria-pressed='true'] .demo-label-play.lang-en,
-html[data-lang='es'] .demo-play[aria-pressed='true'] .demo-label-play.lang-es {
-  display: none !important;
-}
-
-html[data-lang='en'] .demo-play[aria-pressed='true'] .demo-label-stop.lang-en,
-html[data-lang='es'] .demo-play[aria-pressed='true'] .demo-label-stop.lang-es {
-  display: inline !important;
-}
-
-.demo-media {
-  position: relative;
-  display: grid;
-  min-height: 520px;
-  overflow: hidden;
-  place-items: center;
-  background: #0d0a0f;
-}
-
-.demo-image {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.demo-media-label {
-  position: absolute;
-  right: 14px;
-  bottom: 14px;
-  display: flex;
-  padding: 8px 10px;
-  flex-direction: column;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  background: rgba(13, 10, 15, 0.82);
-  color: rgba(255, 255, 255, 0.68);
-  font-family: var(--font-mono);
-  font-size: 8px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  backdrop-filter: blur(8px);
 }
 
-.demo-media-label b {
-  margin-top: 3px;
-  color: #d8a184;
-  font-weight: 520;
+.proof-id {
+  color: var(--accent);
+}
+
+.proof-rail .text-link {
+  margin-left: auto;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+}
+
+.proof-caption p,
+.proof-record-note {
+  max-width: 68ch;
+  margin: 18px 0 0;
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.proof-record {
+  margin-top: 72px;
+}
+
+.proof-output {
+  display: grid;
+  margin-top: 24px;
+}
+
+.proof-row {
+  display: grid;
+  align-items: baseline;
+  gap: 18px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  grid-template-columns: minmax(0, 200px) minmax(0, 210px) minmax(0, 1fr);
+}
+
+.proof-scenario {
+  color: var(--text);
+  opacity: 0.82;
+}
+
+.proof-verdict {
+  color: var(--accent);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+/* The two the classifier rates most severe, and the two that got no reply. */
+.proof-verdict.is-hot {
+  color: var(--hot);
+}
+
+.proof-note {
+  color: var(--text-muted);
+}
+
+.proof-record-note b {
+  color: var(--text);
+  font-weight: 500;
 }
 
 .demo-more {
@@ -2756,23 +2844,40 @@ html[data-lang='es'] .demo-play[aria-pressed='true'] .demo-label-stop.lang-es {
 }
 
 @media (max-width: 860px) {
-  .demo-section {
+  .proof-section {
     padding-block: 104px;
   }
 
-  .demo-showcase {
+  .entry {
+    gap: 20px;
     grid-template-columns: 1fr;
   }
 
-  .demo-copy {
-    padding: 30px;
-    border-right: 0;
-    border-bottom: 1px solid var(--line);
+  .entry-rail {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 14px;
   }
 
-  .demo-media {
-    min-height: 0;
-    aspect-ratio: 5 / 3;
+  .entry-title {
+    align-items: flex-start;
+  }
+
+  .entry-title h3 {
+    max-width: none;
+  }
+
+  .proof-record {
+    margin-top: 56px;
+  }
+
+  .proof-row {
+    gap: 4px;
+    grid-template-columns: 1fr;
+  }
+
+  .proof-rail .text-link {
+    margin-left: 0;
   }
 
   .demo-more {
@@ -2805,16 +2910,6 @@ html[data-lang='es'] .demo-play[aria-pressed='true'] .demo-label-stop.lang-es {
   .maat-code i,
   .maat-attacker-pane code {
     font-size: 7px;
-  }
-
-  .demo-copy {
-    padding: 24px;
-  }
-
-  .demo-links {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 16px;
   }
 
   .demo-more > div {
