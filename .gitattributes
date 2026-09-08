@@ -1,0 +1,8 @@
+# The repo is edited from Windows tools on an NTFS mount; without this every
+# save rewrites all files with CRLF and produces whitespace-only diffs.
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.gif binary
+*.mp4 binary
+*.svg text eol=lf
