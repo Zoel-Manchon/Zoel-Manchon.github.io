@@ -1,44 +1,68 @@
 ---
+/*
+ * The colophon: who kept the notebook, and how to reach them.
+ *
+ * A bound volume ends with its production details rather than a sales pitch,
+ * so the contact block is a plain table of facts — the same register as the
+ * rest of the record.
+ */
 import { site } from '@/data/site';
+import { logbook } from '@/data/site';
 ---
 
-<footer class="site-footer">
-  <div class="site-container principles-block" aria-label="Principles">
-    <p class="principles-cmd"><span class="principles-prompt">$</span> cat ~/.principles</p>
-    <ul class="principles-list">
-      <li>
-        <span class="lang-en">build small systems, not isolated scripts</span>
-        <span class="lang-es">construye sistemas pequeños, no scripts sueltos</span>
-      </li>
-      <li>
-        <span class="lang-en">measure what you build</span>
-        <span class="lang-es">mide lo que construyes</span>
-      </li>
-      <li>
-        <span class="lang-en">keep security in mind from line one</span>
-        <span class="lang-es">seguridad en mente desde la primera línea</span>
-      </li>
-      <li>
-        <span class="lang-en">ship something that actually works</span>
-        <span class="lang-es">entrega algo que funcione de verdad</span>
-      </li>
-    </ul>
-  </div>
+<footer id="colophon" class="colophon-block">
+  <div class="site-container colophon-inner">
+    <div class="colophon-prose">
+      <p class="margin-label">
+        <span class="lang-en">About the author</span>
+        <span class="lang-es">Sobre el autor</span>
+      </p>
+      <p class="lang-en">
+        I design the node, write the firmware, build the backend, wire the dashboard and harden the whole thing.
+        No handoffs, no “that’s the other company’s part”. You deal with one person who owns the result — and
+        everything in this notebook ships with its own test suite.
+      </p>
+      <p class="lang-es">
+        Diseño el nodo, escribo el firmware, monto el backend, conecto el panel y endurezco el conjunto. Sin
+        intermediarios ni «eso es de la otra empresa». Tratas con una sola persona que responde del resultado — y
+        todo lo que hay en este cuaderno lleva su propia suite de tests.
+      </p>
+      <p class="colophon-muted lang-en">
+        Available for a role or for commissioned work. Every claim in these {logbook.count} entries has verifiable
+        output behind it; the repositories are public and the dates are the repositories’ own.
+      </p>
+      <p class="colophon-muted lang-es">
+        Disponible para un puesto o para trabajo por encargo. Cada afirmación de estas {logbook.count} entradas
+        tiene salida verificable detrás; los repositorios son públicos y las fechas son las suyas.
+      </p>
+    </div>
 
-  <div class="site-container footer-inner">
-    <div>
-      <p class="footer-name">{site.name}</p>
-      <p class="footer-note lang-en">Designed and built with Astro.</p>
-      <p class="footer-note lang-es">Diseñado y desarrollado con Astro.</p>
-    </div>
-    <div class="footer-links">
-      <a href={`mailto:${site.email}`}>{site.email}</a>
-      <a href="#top">
-        <span class="lang-en">Back to top</span>
-        <span class="lang-es">Volver arriba</span>
-        <span aria-hidden="true">↑</span>
-      </a>
-      <a href={site.github} target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
-    </div>
+    <dl class="colophon-contact">
+      <p class="margin-label">
+        <span class="lang-en">Contact</span>
+        <span class="lang-es">Contacto</span>
+      </p>
+      <div>
+        <dt><span class="lang-en">Email</span><span class="lang-es">Correo</span></dt>
+        <dd><a href={`mailto:${site.email}`}>{site.email}</a></dd>
+      </div>
+      <div>
+        <dt><span class="lang-en">Repositories</span><span class="lang-es">Repositorios</span></dt>
+        <dd>
+          <a href={site.github} target="_blank" rel="noreferrer">github.com/Zoel-Manchon <span aria-hidden="true">↗</span></a>
+        </dd>
+      </div>
+      <div>
+        <dt><span class="lang-en">Location</span><span class="lang-es">Ubicación</span></dt>
+        <dd><span class="lang-en">{site.location.en}</span><span class="lang-es">{site.location.es}</span></dd>
+      </div>
+      <div>
+        <dt><span class="lang-en">This volume</span><span class="lang-es">Este volumen</span></dt>
+        <dd>
+          <span class="lang-en">Built with Astro · back to <a href="#top">the top</a></span>
+          <span class="lang-es">Hecho con Astro · volver <a href="#top">arriba</a></span>
+        </dd>
+      </div>
+    </dl>
   </div>
 </footer>

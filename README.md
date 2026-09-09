@@ -5,40 +5,34 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
 ![GitHub Pages](https://img.shields.io/badge/GitHub_Pages-222222?style=flat-square&logo=githubpages&logoColor=white)
 
-Minimal bilingual portfolio built with Astro, TypeScript and Tailwind CSS.
+A bilingual portfolio built with Astro, TypeScript and Tailwind CSS, laid out as a bound engineering logbook.
 
-## Current structure
+## The idea
 
-- Thirteen systems presented as dossier entries rather than cards: identifier, claim, description, the line the system prints when it runs, and what it is built from. Every entry is the same five bands in the same order, so any two projects can be compared on the same axis.
-- No invented interface mockups. The material on the page is material that is already true.
-- Evidence section above the index, holding two proofs of deliberately different kinds: a clip of real hardware, and verbatim classifier output from the honeypot. A moving image and a block of text cannot compete for the same glance; two identical showcase boxes did.
-- The video is `preload="none"` — nothing is fetched until a visitor presses play.
-- Links to the Agrisentinel SOC, Aegis attack range and Emberwall live-boot demos.
-- Dark and light themes with saved preference.
-- English and Spanish content with saved preference.
-- Responsive, accessible single-page layout.
-- Geist and Archivo variable fonts, self-hosted through Fontsource.
+The page is a lab notebook, not a catalogue: dated entries in the order they were opened, a numbered rail down the left, marginalia down the right. It reads as the continuous record of one body of work rather than a shelf of products.
+
+What that buys, and what it costs: nothing on the page shouts, and there is no cover selling anything, so a visitor who wants one specific project goes through the index first. In exchange, thirteen entries read as a volume instead of an endless list, because every entry is the same shape at the same rhythm.
+
+## Structure
+
+1. **Masthead** — who kept the notebook, when it was opened, how many entries, when it was last worked.
+2. **Index of entries** — all thirteen in one scan: number, title, repository, date opened.
+3. **Evidence annex** — FIG. 1 a clip of real hardware, FIG. 2 a recording of the editor being driven, TABLE 1 verbatim honeypot classifier output. Proof arrives before the prose that asks to be believed.
+4. **The log** — entries grouped by the month they were opened, each with the identifier, the date, the claim, the line the system prints when it runs, its four load-bearing decisions and its stack.
+5. **Back matter** — commissions, loose leaves (the smaller repositories), and the colophon.
+
+## Dates
+
+Every date on the page is the repository's own — `started` is the day the repo was created, `updated` the day it was last pushed — and entries are numbered in the order they were opened. A logbook whose dates are decorative is not worth reading, so they are kept in `src/data/site.ts` alongside the copy and changed together with it.
+
+## Other properties
+
+- English by default, Spanish one button away; dark by default, light one button away. Both preferences persist, and both are applied before first paint so nothing flashes.
+- Nothing heavy loads unasked: the video is `preload="none"` and the 2 MB GIF only replaces its poster on a click.
+- Severity in TABLE 1 carries a `SEVERE` mark as well as a colour, so it survives greyscale and colour blindness.
+- Responsive from 320 px up; the three-column entry stacks rail, body, margin.
+- Geist, Geist Mono and Archivo variable fonts, self-hosted through Fontsource.
 - Static output ready for GitHub Pages.
-
-## Selected work order
-
-The grid runs newest first, so the projects carrying the current narrative lead:
-
-1. Emberwall
-2. Agrisentinel
-3. Sentinel Node
-4. Eastron LoRaWAN Energy Monitoring
-5. Pyscan
-6. Aegis Zero Trust
-7. Phosphor
-8. Crypto Dashboard
-9. Maat
-10. Keystone
-11. Ferrogate
-12. Psychron
-13. HoneyTrap
-
-Nine further repositories stay visible in the full index rather than disappearing from the portfolio.
 
 ## Run locally
 
@@ -61,12 +55,14 @@ npm run preview
 
 ## Main content files
 
-- `src/data/site.ts`: project selection, descriptions, stacks, repository links and ticker messages.
-- `src/pages/index.astro`: page structure and general copy.
-- `src/components/ProjectEntry.astro`: a project rendered as a dossier entry.
-- `src/components/Evidence.astro`: the hardware clip and the captured classifier output.
-- `src/styles/global.css`: global visual system and responsive styles.
-- `public/demos/`: the hardware clip and its poster.
+- `src/data/site.ts` — entries, dates, descriptions, stacks, repository links, commissions and loose leaves.
+- `src/lib/dates.ts` — ISO dates formatted into month and day labels without `new Date()`, which would shift them a day west of Greenwich.
+- `src/pages/index.astro` — the volume: masthead, index, log groups and back matter.
+- `src/components/LogEntry.astro` — one entry: rail, body, marginalia.
+- `src/components/Annex.astro` — the two figures and the verdict table.
+- `src/components/Header.astro` — the running head and the language and ink controls.
+- `src/styles/global.css` — the visual system; light is the printed page, dark the same page in reverse ink.
+- `public/demos/` — the clips and their posters.
 
 ## Deployment
 

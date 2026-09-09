@@ -1,48 +1,54 @@
 ---
+/*
+ * The running head of the notebook.
+ *
+ * A bound volume repeats its identity on every page, so this rail stays put
+ * while the log scrolls: who wrote it, where you are, and the two controls that
+ * change how it is read — language and ink.
+ */
 import { site } from '@/data/site';
 ---
 
-<header class="site-header">
-  <div class="site-container header-inner">
-    <a class="brand" href="#top" aria-label={`${site.name}, home`}>
-      <span class="brand-mark">{site.shortName}</span>
-      <span class="brand-name">{site.name}</span>
+<header class="running-head">
+  <div class="site-container running-head-inner">
+    <a class="colophon" href="#top">
+      <span class="colophon-mark">{site.shortName}</span>
+      <span class="colophon-name">{site.name}</span>
     </a>
 
-    <nav class="desktop-nav" aria-label="Primary navigation">
-      <a href="#demo">
-        <span class="lang-en">Demo</span>
-        <span class="lang-es">Demo</span>
-      </a>
-      <a href="#work">
-        <span class="lang-en">Work</span>
-        <span class="lang-es">Proyectos</span>
-      </a>
-      <a href="#services">
-        <span class="lang-en">Freelance</span>
-        <span class="lang-es">Freelance</span>
-      </a>
-      <a href="#about">
-        <span class="lang-en">About</span>
-        <span class="lang-es">Sobre mí</span>
-      </a>
-      <a href="#archive">
+    <nav class="running-nav" aria-label="Sections">
+      <a href="#index">
         <span class="lang-en">Index</span>
         <span class="lang-es">Índice</span>
       </a>
-      <a href={site.github} target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+      <a href="#annex">
+        <span class="lang-en">Evidence</span>
+        <span class="lang-es">Pruebas</span>
+      </a>
+      <a href="#log">
+        <span class="lang-en">Log</span>
+        <span class="lang-es">Registro</span>
+      </a>
+      <a href="#commissions">
+        <span class="lang-en">Commissions</span>
+        <span class="lang-es">Encargos</span>
+      </a>
+      <a href="#colophon">
+        <span class="lang-en">Contact</span>
+        <span class="lang-es">Contacto</span>
+      </a>
     </nav>
 
-    <div class="header-actions">
-      <button id="language-toggle" class="icon-button language-button" type="button" aria-label="Cambiar idioma" aria-pressed="false">
-        <span class="toggle-language-label" aria-hidden="true">ES</span>
+    <div class="running-controls">
+      <button id="language-toggle" class="stamp-button" type="button" aria-label="Switch to Spanish">
+        <span class="stamp-label" aria-hidden="true">ES</span>
       </button>
-      <button id="theme-toggle" class="icon-button" type="button" aria-label="Cambiar tema" aria-pressed="true">
-        <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+      <button id="theme-toggle" class="stamp-button" type="button" aria-label="Switch to light mode" aria-pressed="true">
+        <svg class="ink-icon ink-icon-sun" viewBox="0 0 24 24" aria-hidden="true">
           <circle cx="12" cy="12" r="3.5"></circle>
           <path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"></path>
         </svg>
-        <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+        <svg class="ink-icon ink-icon-moon" viewBox="0 0 24 24" aria-hidden="true">
           <path d="M20.5 14.6A8.6 8.6 0 0 1 9.4 3.5 8.8 8.8 0 1 0 20.5 14.6Z"></path>
         </svg>
       </button>
@@ -54,7 +60,7 @@ import { site } from '@/data/site';
   const root = document.documentElement;
   const themeToggle = document.querySelector<HTMLButtonElement>('#theme-toggle');
   const languageToggle = document.querySelector<HTMLButtonElement>('#language-toggle');
-  const languageLabel = document.querySelector<HTMLElement>('.toggle-language-label');
+  const languageLabel = document.querySelector<HTMLElement>('.stamp-label');
   const themeMeta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
   const descriptionMeta = document.querySelector<HTMLMetaElement>('meta[name="description"]');
 
@@ -63,21 +69,26 @@ import { site } from '@/data/site';
     const isSpanish = root.dataset.lang === 'es';
 
     themeToggle?.setAttribute('aria-pressed', String(isDark));
-    themeToggle?.setAttribute('aria-label', isSpanish
-      ? isDark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'
-      : isDark ? 'Switch to light mode' : 'Switch to dark mode');
+    themeToggle?.setAttribute(
+      'aria-label',
+      isSpanish
+        ? isDark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'
+        : isDark ? 'Switch to light mode' : 'Switch to dark mode',
+    );
 
-    languageToggle?.setAttribute('aria-pressed', String(isSpanish));
-    languageToggle?.setAttribute('aria-label', isSpanish ? 'Cambiar a inglés' : 'Switch to Spanish');
+    // The stamp shows the language you would get, not the one you are reading.
+    languageToggle?.setAttribute('aria-label', isSpanish ? 'Switch to English' : 'Cambiar a español');
     if (languageLabel) languageLabel.textContent = isSpanish ? 'EN' : 'ES';
     if (themeMeta) themeMeta.content = isDark ? '#0a0a0a' : '#f4f4f2';
+
     document.title = isSpanish
-      ? 'Zoel Arias Manchón — Sistemas seguros de extremo a extremo'
-      : 'Zoel Arias Manchón — Secure systems, end to end';
+      ? 'Zoel Arias Manchón — Cuaderno de ingeniería'
+      : 'Zoel Arias Manchón — Engineering logbook';
+
     if (descriptionMeta) {
       descriptionMeta.content = isSpanish
-        ? 'Desarrollador de sistemas seguros: IoT, herramientas nativas, backends en tiempo real y seguridad aplicada. Abierto a empleo y freelance.'
-        : 'Secure-systems developer: IoT, native tooling, real-time backends and security engineering. Open to roles and freelance projects.';
+        ? 'Cuaderno de ingeniería: trece sistemas construidos entre junio y septiembre de 2026 — IoT, seguridad aplicada, backends en tiempo real y herramientas nativas.'
+        : 'An engineering logbook: thirteen systems built between June and September 2026 — IoT, applied security, real-time backends and native tooling.';
     }
   };
 

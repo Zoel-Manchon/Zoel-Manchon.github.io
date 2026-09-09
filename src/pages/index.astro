@@ -1,297 +1,261 @@
 ---
+/*
+ * The volume, read in one pass.
+ *
+ * Masthead → index of entries → evidence annex → the log itself → commissions
+ * and archive → colophon. The index comes before the annex so a reader gets the
+ * map first; the annex comes before the log so the proof arrives before the
+ * prose asking to be believed.
+ */
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Header from '@/components/Header.astro';
-import ProjectEntry from '@/components/ProjectEntry.astro';
+import Annex from '@/components/Annex.astro';
+import LogEntry from '@/components/LogEntry.astro';
 import Footer from '@/components/Footer.astro';
-import Evidence from '@/components/Evidence.astro';
-import { projects, site, tickerLines, archive, services } from '@/data/site';
+import { projects, site, archive, services, logbook } from '@/data/site';
+import { dayLabel, groupByMonth, monthLabel } from '@/lib/dates';
+
+const groups = groupByMonth(projects);
+const opened = monthLabel(logbook.opened);
+const latest = monthLabel(logbook.latest);
 ---
 
 <BaseLayout
-  title={`${site.name} — Sistemas seguros de extremo a extremo`}
-  description="Desarrollador de sistemas seguros: IoT, seguridad ofensiva y defensiva, backends en tiempo real y herramientas nativas. Abierto a empleo y freelance."
+  title={`${site.name} — Engineering logbook`}
+  description="An engineering logbook: thirteen systems built between June and September 2026 — IoT, applied security, real-time backends and native tooling."
 >
-  <div id="top" class="page-shell min-h-screen">
-    <a
-      href="#main-content"
-      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:border focus:border-[var(--line)] focus:bg-[var(--background)] focus:px-4 focus:py-3 focus:text-xs"
-    >
+  <div id="top" class="volume">
+    <a class="skip-link" href="#masthead">
       <span class="lang-en">Skip to content</span>
       <span class="lang-es">Saltar al contenido</span>
     </a>
+
     <Header />
 
-    <main id="main-content">
-      <section class="hero site-container" aria-labelledby="hero-title">
-        <div class="hero-kicker reveal-item">
-          <span class="availability-dot" aria-hidden="true"></span>
-          <span class="lang-en">Spain · Open to roles & freelance</span>
-          <span class="lang-es">España · Empleo o freelance</span>
-        </div>
-
-        <h1 id="hero-title" class="reveal-item">
-          <span class="lang-en">Secure systems, end to end — from the sensor to the dashboard, <em class="hero-em">hardened by design.</em></span>
-          <span class="lang-es">Sistemas seguros de extremo a extremo — del sensor al panel, <em class="hero-em">endurecidos por diseño.</em></span>
-        </h1>
-
-        <div class="hero-bottom reveal-item">
-          <p class="hero-description lang-en">
-            I build systems whole — firmware, telemetry, backends, security tooling and native apps — with security as part of the design, not a patch. Available to join a team, or for freelance projects.
-          </p>
-          <p class="hero-description lang-es">
-            Construyo sistemas completos — firmware, telemetría, backend, herramientas de seguridad y apps nativas — con la seguridad como parte del diseño, no como parche. Disponible para incorporarme a un equipo o para proyectos por encargo.
-          </p>
-
-          <div class="hero-actions">
-            <a class="text-link" href="#demo">
-              <span class="lang-en">See it working</span>
-              <span class="lang-es">Verlo funcionando</span>
-              <span aria-hidden="true">↓</span>
-            </a>
-            <a class="text-link" href="#work">
-              <span class="lang-en">View selected work</span>
-              <span class="lang-es">Ver proyectos seleccionados</span>
-              <span aria-hidden="true">↓</span>
-            </a>
-          </div>
-        </div>
-
-        <div class="telemetry-ticker reveal-item" aria-hidden="true">
-          <span class="ticker-prompt">▸</span>
-          <span id="ticker-line" class="ticker-line">{tickerLines[0]}</span>
-        </div>
-      </section>
-
-      <Evidence />
-
-      <section id="work" class="work-section site-container" aria-labelledby="work-title">
-        <div class="section-heading reveal-item">
-          <p class="eyebrow lang-en">Selected work</p>
-          <p class="eyebrow lang-es">Proyectos seleccionados</p>
-          <h2 id="work-title">
-            <span class="lang-en">Systems built end to end, then hardened.</span>
-            <span class="lang-es">Sistemas construidos de principio a fin, y endurecidos.</span>
-          </h2>
-        </div>
-
-        <div class="entry-index">
-          {projects.map((project) => <ProjectEntry project={project} />)}
-        </div>
-      </section>
-
-      <section id="services" class="services-section site-container" aria-labelledby="services-title">
-        <div class="section-heading reveal-item">
-          <p class="eyebrow lang-en">Freelance</p>
-          <p class="eyebrow lang-es">Freelance</p>
-          <h2 id="services-title">
-            <span class="lang-en">Got a project? I also work on commission.</span>
-            <span class="lang-es">¿Tienes un proyecto? También trabajo por encargo.</span>
-          </h2>
-        </div>
-
-        <div class="services-grid reveal-item">
-          {services.map((service) => (
-            <article class="service-card">
-              <p class="service-number">{service.number}</p>
-              <h3>
-                <span class="lang-en">{service.title.en}</span>
-                <span class="lang-es">{service.title.es}</span>
-              </h3>
-              <p class="service-desc lang-en">{service.description.en}</p>
-              <p class="service-desc lang-es">{service.description.es}</p>
-              <ul class="service-deliverables">
-                {service.deliverables.map((item) => (
-                  <li>
-                    <span class="lang-en">{item.en}</span>
-                    <span class="lang-es">{item.es}</span>
-                  </li>
-                ))}
-              </ul>
-            </article>
-          ))}
-        </div>
-
-        <div class="process-strip reveal-item" aria-label="How I work">
-          <div class="process-step">
-            <p class="process-num">01</p>
-            <h3>
-              <span class="lang-en">Tell me the problem</span>
-              <span class="lang-es">Cuéntame el problema</span>
-            </h3>
-            <p>
-              <span class="lang-en">A call or a visit, no strings attached. I ask, I look, I take notes.</span>
-              <span class="lang-es">Una llamada o una visita, sin compromiso. Pregunto, miro y tomo notas.</span>
+    <main>
+      <header id="masthead" class="masthead site-container">
+        <div class="masthead-head">
+          <div class="masthead-identity">
+            <p class="masthead-kicker">
+              <span class="lang-en">Engineering logbook · systems record</span>
+              <span class="lang-es">Cuaderno de ingeniería · registro de sistemas</span>
+            </p>
+            <h1>{site.name}</h1>
+            <p class="masthead-line">
+              <span class="lang-en">
+                Security engineer. Whole systems, with the security designed in rather than added afterwards.
+              </span>
+              <span class="lang-es">
+                Ingeniero de seguridad. Sistemas completos, con la seguridad diseñada dentro y no añadida después.
+              </span>
             </p>
           </div>
-          <div class="process-step">
-            <p class="process-num">02</p>
-            <h3>
-              <span class="lang-en">Fixed proposal</span>
-              <span class="lang-es">Propuesta cerrada</span>
-            </h3>
-            <p>
-              <span class="lang-en">Scope, timeline and price in writing. No surprises halfway through.</span>
-              <span class="lang-es">Alcance, plazos y precio por escrito. Sin sorpresas a mitad de obra.</span>
-            </p>
-          </div>
-          <div class="process-step">
-            <p class="process-num">03</p>
-            <h3>
-              <span class="lang-en">Install & answer for it</span>
-              <span class="lang-es">Instalo y respondo de ello</span>
-            </h3>
-            <p>
-              <span class="lang-en">I build it, document it and stand behind it — with optional monthly maintenance.</span>
-              <span class="lang-es">Lo monto, lo documento y doy la cara — con mantenimiento mensual opcional.</span>
-            </p>
-          </div>
-        </div>
 
-        <p class="services-note reveal-item">
-          <span class="lang-en">Every installation can include a monthly maintenance plan: monitoring, updates and support, so it keeps working after I leave.</span>
-          <span class="lang-es">Toda instalación puede incluir plan de mantenimiento mensual: monitorización, actualizaciones y soporte, para que siga funcionando cuando yo ya no esté.</span>
-        </p>
-      </section>
-
-      <section id="archive" class="archive-section site-container" aria-labelledby="archive-title">
-        <div class="section-heading reveal-item">
-          <p class="eyebrow lang-en">Full index</p>
-          <p class="eyebrow lang-es">Índice completo</p>
-          <h2 id="archive-title">
-            <span class="lang-en">Everything else in <code class="h-code">~/projects</code>.</span>
-            <span class="lang-es">Todo lo demás en <code class="h-code">~/projects</code>.</span>
-          </h2>
-        </div>
-
-        <ol class="archive-list reveal-item">
-          {archive.map((entry, i) => (
-            <li>
-              <a class="archive-row" href={entry.url} target="_blank" rel="noreferrer">
-                <span class="archive-index">{String(i + 1).padStart(2, '0')}</span>
-                <span class="archive-name">{entry.name}</span>
-                <span class="archive-desc lang-en">{entry.description.en}</span>
-                <span class="archive-desc lang-es">{entry.description.es}</span>
-                <span class="archive-tags">{entry.tags.join(' · ')}</span>
-                <span class="archive-arrow" aria-hidden="true">↗</span>
-              </a>
-            </li>
-          ))}
-        </ol>
-      </section>
-
-      <section id="about" class="about-section site-container" aria-labelledby="about-title">
-        <div class="section-heading reveal-item">
-          <p class="eyebrow lang-en">About</p>
-          <p class="eyebrow lang-es">Sobre mí</p>
-          <h2 id="about-title">
-            <span class="lang-en">One engineer, end to end.</span>
-            <span class="lang-es">Un solo ingeniero, de extremo a extremo.</span>
-          </h2>
-        </div>
-
-        <div class="about-grid">
-          <div class="about-copy reveal-item">
-            <p class="lang-en">
-              I design the node, write the firmware, build the backend, wire the dashboard and harden the whole thing. No handoffs, no “that’s the other company’s part”. You deal with one person who owns the result — and everything I ship comes with its own test suite.
-            </p>
-            <p class="lang-es">
-              Diseño el nodo, escribo el firmware, monto el backend, conecto el panel y endurezco el conjunto. Sin intermediarios ni “eso es de la otra empresa”. Tratas con una sola persona que responde del resultado — y todo lo que entrego lleva su propia suite de tests.
-            </p>
-            <p class="stat-row" aria-label="Quick stats">
-              <span class="lang-en">Rust · Python · TypeScript ▸ IoT/OT · AppSec · native tooling</span>
-              <span class="lang-es">Rust · Python · TypeScript ▸ IoT/OT · AppSec · herramientas nativas</span>
-            </p>
-            <a class="text-link" href={site.github} target="_blank" rel="noreferrer">
-              <span class="lang-en">Explore all repositories</span>
-              <span class="lang-es">Explorar todos los repositorios</span>
-              <span aria-hidden="true">↗</span>
-            </a>
-          </div>
-
-          <dl class="capability-list reveal-item">
+          <dl class="masthead-figures">
             <div>
-              <dt class="lang-en">Connectivity</dt>
-              <dt class="lang-es">Conectividad</dt>
-              <dd>ESP32 · LoRaWAN · MQTT · Modbus</dd>
+              <dt><span class="lang-en">Opened</span><span class="lang-es">Abierto</span></dt>
+              <dd><span class="lang-en">{opened.en}</span><span class="lang-es">{opened.es}</span></dd>
             </div>
             <div>
-              <dt class="lang-en">Data & dashboards</dt>
-              <dt class="lang-es">Datos y paneles</dt>
-              <dd>InfluxDB · Grafana · Node-RED · Series temporales</dd>
+              <dt><span class="lang-en">Entries</span><span class="lang-es">Entradas</span></dt>
+              <dd>{logbook.count}</dd>
             </div>
             <div>
-              <dt class="lang-en">Security</dt>
-              <dt class="lang-es">Seguridad</dt>
-              <dd>Cifrado · Autenticación · Hardening · Protocolos OT</dd>
+              <dt><span class="lang-en">Last worked</span><span class="lang-es">Última mano</span></dt>
+              <dd><span class="lang-en">{latest.en}</span><span class="lang-es">{latest.es}</span></dd>
+            </div>
+            <div>
+              <dt><span class="lang-en">Source</span><span class="lang-es">Origen</span></dt>
+              <dd>
+                <a href={site.github} target="_blank" rel="noreferrer">github.com/Zoel-Manchon <span aria-hidden="true">↗</span></a>
+              </dd>
             </div>
           </dl>
         </div>
+
+        <div class="masthead-summary">
+          <div class="summary-prose">
+            <p class="margin-label">
+              <span class="lang-en">Summary</span>
+              <span class="lang-es">Resumen</span>
+            </p>
+            <p class="lang-en">
+              This notebook records thirteen systems built between June and September 2026: firmware, telemetry
+              pipelines, backend services, security tooling and a Linux distribution compiled from scratch. Each
+              entry keeps the day it was opened, a real line of the program’s output, and the handful of decisions
+              holding it up.
+            </p>
+            <p class="lang-es">
+              Este cuaderno recoge trece sistemas construidos entre junio y septiembre de 2026: firmware,
+              canalizaciones de telemetría, servicios backend, herramientas de seguridad y una distribución Linux
+              compilada desde cero. Cada entrada conserva el día en que se abrió, una línea real de la salida del
+              programa y el puñado de decisiones que la sostienen.
+            </p>
+            <p class="summary-muted lang-en">
+              It reads in order, like a notebook. The index below is the shortcut; nothing opens in another tab
+              unless you ask for it.
+            </p>
+            <p class="summary-muted lang-es">
+              Se lee en orden, como un cuaderno. El índice de abajo es el atajo; nada se abre en otra pestaña sin
+              que se pida.
+            </p>
+          </div>
+
+          <aside class="summary-margin">
+            <p class="margin-label margin-label-accent">
+              <span class="lang-en">Marginal note</span>
+              <span class="lang-es">Nota al margen</span>
+            </p>
+            <p class="lang-en">
+              Open to a role or to commissioned work. Every claim in this notebook has verifiable output behind it,
+              and the dates are the repositories’ own.
+            </p>
+            <p class="lang-es">
+              Abierto a un puesto o a trabajo por encargo. Cada afirmación de este cuaderno tiene salida verificable
+              detrás, y las fechas son las de los propios repositorios.
+            </p>
+          </aside>
+        </div>
+      </header>
+
+      <section id="index" class="index-section site-container" aria-labelledby="index-title">
+        <div class="rule-heading">
+          <h2 id="index-title">
+            <span class="lang-en">Index of entries</span>
+            <span class="lang-es">Índice de entradas</span>
+          </h2>
+          <p class="rule-tag">01–{String(logbook.count).padStart(2, '0')}</p>
+        </div>
+
+        <ol class="index-list">
+          {projects.map((project) => {
+            const day = dayLabel(project.started);
+            return (
+              <li class="index-row">
+                <a href={`#entry-${project.number}`}>
+                  <span class="index-number">{project.number}</span>
+                  <span class="index-title">
+                    <span class="lang-en">{project.title.en}</span>
+                    <span class="lang-es">{project.title.es}</span>
+                  </span>
+                  <span class="index-repo">{project.repo}</span>
+                  <span class="index-date">
+                    <span class="lang-en">{day.en}</span>
+                    <span class="lang-es">{day.es}</span>
+                  </span>
+                </a>
+              </li>
+            );
+          })}
+        </ol>
       </section>
 
-      <section class="contact-section site-container reveal-item" aria-labelledby="contact-title">
-        <p class="eyebrow lang-en">Contact</p>
-        <p class="eyebrow lang-es">Contacto</p>
-        <div class="contact-row">
-          <h2 id="contact-title">
-            <span class="lang-en">Let’s build something useful.</span>
-            <span class="lang-es">Construyamos algo útil.</span>
-          </h2>
-          <div class="contact-actions">
-            <a class="contact-button" href={`mailto:${site.email}`}>
-              <span class="lang-en">Email me</span>
-              <span class="lang-es">Escríbeme</span>
-              <span aria-hidden="true">↗</span>
-            </a>
-            <a class="text-link" href={site.github} target="_blank" rel="noreferrer">
-              GitHub <span aria-hidden="true">↗</span>
-            </a>
+      <Annex />
+
+      <section id="log" class="log-section site-container" aria-labelledby="log-title">
+        <h2 id="log-title" class="sr-only">
+          <span class="lang-en">The log</span>
+          <span class="lang-es">El registro</span>
+        </h2>
+
+        {groups.map((group) => (
+          <div class="log-group">
+            <div class="group-heading">
+              <h3>
+                <span class="lang-en">{group.label.en}</span>
+                <span class="lang-es">{group.label.es}</span>
+              </h3>
+              <span class="group-rule" aria-hidden="true"></span>
+              <p class="group-count">
+                <span class="lang-en">{group.rows.length} {group.rows.length === 1 ? 'entry' : 'entries'}</span>
+                <span class="lang-es">{group.rows.length} {group.rows.length === 1 ? 'entrada' : 'entradas'}</span>
+              </p>
+            </div>
+
+            {group.rows.map((project) => <LogEntry project={project} />)}
           </div>
+        ))}
+      </section>
+
+      <section id="commissions" class="back-matter site-container" aria-labelledby="commissions-title">
+        <div class="back-column">
+          <div class="rule-heading">
+            <h2 id="commissions-title">
+              <span class="lang-en">Commissions</span>
+              <span class="lang-es">Encargos</span>
+            </h2>
+            <p class="rule-tag">
+              <span class="lang-en">freelance</span>
+              <span class="lang-es">por encargo</span>
+            </p>
+          </div>
+
+          <ol class="commission-list">
+            {services.map((service) => (
+              <li class="commission-row">
+                <span class="commission-number">{service.number}</span>
+                <div class="commission-body">
+                  <h3>
+                    <span class="lang-en">{service.title.en}</span>
+                    <span class="lang-es">{service.title.es}</span>
+                  </h3>
+                  <p class="lang-en">{service.description.en}</p>
+                  <p class="lang-es">{service.description.es}</p>
+                  <ul class="commission-deliverables">
+                    {service.deliverables.map((item) => (
+                      <li>
+                        <span class="lang-en">{item.en}</span>
+                        <span class="lang-es">{item.es}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </li>
+            ))}
+          </ol>
+
+          <p class="commission-note lang-en">
+            Every installation can include a monthly maintenance plan — monitoring, updates and support — so it
+            keeps working after I leave.
+          </p>
+          <p class="commission-note lang-es">
+            Toda instalación puede incluir plan de mantenimiento mensual — monitorización, actualizaciones y
+            soporte — para que siga funcionando cuando yo ya no esté.
+          </p>
         </div>
-        <p class="contact-note">
-          <span class="lang-en">A role on your team, or something you need measured, connected or hardened — either way, tell me about it and I’ll get back to you.</span>
-          <span class="lang-es">Un puesto en tu equipo, o algo que necesites medir, conectar o endurecer — sea lo que sea, cuéntamelo y te contesto.</span>
-        </p>
+
+        <div class="back-column" id="archive">
+          <div class="rule-heading">
+            <h2>
+              <span class="lang-en">Loose leaves</span>
+              <span class="lang-es">Hojas sueltas</span>
+            </h2>
+            <p class="rule-tag">{archive.length}</p>
+          </div>
+
+          <ul class="archive-list">
+            {archive.map((entry) => {
+              const day = dayLabel(entry.started);
+              return (
+                <li class="archive-row">
+                  <a href={entry.url} target="_blank" rel="noreferrer">
+                    <span class="archive-name">{entry.name}</span>
+                    <span class="archive-date">
+                      <span class="lang-en">{day.en}</span>
+                      <span class="lang-es">{day.es}</span>
+                    </span>
+                    <span class="archive-desc lang-en">{entry.description.en}</span>
+                    <span class="archive-desc lang-es">{entry.description.es}</span>
+                    <span class="archive-tags">{entry.tags.join(' · ')}</span>
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
       </section>
     </main>
 
     <Footer />
   </div>
-
-  <script>
-    import { tickerLines } from '@/data/site';
-
-    const items = document.querySelectorAll<HTMLElement>('.reveal-item');
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    if (reduceMotion || !('IntersectionObserver' in window)) {
-      items.forEach((item) => item.classList.add('is-visible'));
-    } else {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.12 });
-
-      items.forEach((item) => observer.observe(item));
-    }
-
-    const tickerLine = document.querySelector<HTMLElement>('#ticker-line');
-
-    if (tickerLine && !reduceMotion) {
-      let index = 0;
-
-      setInterval(() => {
-        index = (index + 1) % tickerLines.length;
-        tickerLine.classList.add('is-swapping');
-
-        setTimeout(() => {
-          tickerLine.textContent = tickerLines[index] ?? '';
-          tickerLine.classList.remove('is-swapping');
-        }, 260);
-      }, 3800);
-    }
-  </script>
 </BaseLayout>

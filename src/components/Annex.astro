@@ -1,0 +1,205 @@
+---
+/*
+ * The evidence annex.
+ *
+ * A notebook that only asserts is a brochure. This is the part that shows: a
+ * clip of hardware doing the thing, a recording of a tool being driven, and the
+ * literal output of a classifier reading hostile traffic. Two figures and a
+ * table, numbered and captioned, referenced from the entries that produced them.
+ *
+ * Nothing heavy is fetched until someone asks for it: the video is preload="none"
+ * and the 2 MB GIF only replaces its poster on a click.
+ */
+---
+
+<section id="annex" class="annex site-container" aria-labelledby="annex-title">
+  <div class="rule-heading">
+    <h2 id="annex-title">
+      <span class="lang-en">Evidence annex</span>
+      <span class="lang-es">Anexo de pruebas</span>
+    </h2>
+    <p class="rule-tag">FIG. 1 · FIG. 2 · <span class="lang-en">TABLE 1</span><span class="lang-es">TABLA 1</span></p>
+  </div>
+
+  <div class="annex-grid">
+    <figure class="plate plate-wide">
+      <div class="plate-frame">
+        <video
+          class="plate-media"
+          controls
+          preload="none"
+          playsinline
+          muted
+          poster="/demos/psychron-poster.jpg"
+          width="1280"
+          height="720"
+        >
+          <source src="/demos/psychron-demo.mp4" type="video/mp4" />
+          <span class="lang-en">Your browser cannot play this video.</span>
+          <span class="lang-es">Tu navegador no puede reproducir este vídeo.</span>
+        </video>
+      </div>
+      <figcaption class="plate-caption">
+        <span class="plate-id">FIG. 1</span>
+        <span class="plate-meta">
+          <a href="#entry-13">
+            <span class="lang-en">entry 13 · psychron</span>
+            <span class="lang-es">entrada 13 · psychron</span>
+          </a>
+          <span>ESP32 · DHT22 · SSD1306 · MQTT mTLS</span>
+        </span>
+        <span class="plate-text lang-en">
+          A hand over the sensor and the whole chain moves. Real hardware on a breadboard: the node signs its
+          telemetry with a client certificate and publishes over mutual TLS — humidity climbs on the dashboard as
+          it climbs on the display.
+        </span>
+        <span class="plate-text lang-es">
+          Una mano sobre el sensor y la cadena entera se mueve. Hardware real sobre protoboard: el nodo firma su
+          telemetría con un certificado de cliente y publica sobre TLS mutuo — la humedad sube en el panel a la vez
+          que sube en la pantalla.
+        </span>
+      </figcaption>
+    </figure>
+
+    <figure class="plate">
+      <div class="plate-frame">
+        <img
+          id="fig2-media"
+          class="plate-media"
+          src="/demos/maat-preview.png"
+          data-motion="/demos/maat-demo.gif"
+          alt="The maat editor refusing a save because the file on disk no longer matches the buffer"
+          width="1200"
+          height="720"
+          loading="lazy"
+          decoding="async"
+        />
+        <button id="fig2-play" class="plate-load" type="button">
+          <span class="lang-en">Play recording · 2.0 MB</span>
+          <span class="lang-es">Reproducir grabación · 2,0 MB</span>
+        </button>
+      </div>
+      <figcaption class="plate-caption">
+        <span class="plate-id">FIG. 2</span>
+        <span class="plate-meta">
+          <a href="#entry-08">
+            <span class="lang-en">entry 08 · maat</span>
+            <span class="lang-es">entrada 08 · maat</span>
+          </a>
+          <span>Rust · ratatui · SHA-256</span>
+        </span>
+        <span class="plate-text lang-en">
+          The editor being driven through its four modes. The save it refuses is the point: the file on disk no
+          longer matches the fingerprint taken when it was opened.
+        </span>
+        <span class="plate-text lang-es">
+          El editor recorriendo sus cuatro modos. Lo interesante es el guardado que rechaza: el fichero en disco ya
+          no coincide con la huella tomada al abrirlo.
+        </span>
+      </figcaption>
+    </figure>
+
+    <figure class="plate plate-table">
+      <figcaption class="plate-caption plate-caption-top">
+        <span class="plate-id"><span class="lang-en">TABLE 1</span><span class="lang-es">TABLA 1</span></span>
+        <span class="plate-meta">
+          <a href="#entry-10">
+            <span class="lang-en">entry 10 · honeytrap</span>
+            <span class="lang-es">entrada 10 · honeytrap</span>
+          </a>
+          <span>MQTT · CoAP</span>
+        </span>
+        <span class="plate-text lang-en">
+          Verbatim classifier output over eight scripted attacks. Severe rows carry the SEVERE mark as well as the
+          colour, so the severity survives a greyscale print and a colour-blind reader.
+        </span>
+        <span class="plate-text lang-es">
+          Salida literal del clasificador sobre ocho ataques guionizados. Las filas graves llevan la marca GRAVE
+          además del color, así que la severidad sobrevive a una impresión en gris y a un lector daltónico.
+        </span>
+      </figcaption>
+
+      <table class="verdicts">
+        <thead>
+          <tr>
+            <th scope="col">
+              <span class="lang-en">Scenario</span>
+              <span class="lang-es">Escenario</span>
+            </th>
+            <th scope="col">
+              <span class="lang-en">Verdict</span>
+              <span class="lang-es">Veredicto</span>
+            </th>
+            <th scope="col">
+              <span class="lang-en">Note</span>
+              <span class="lang-es">Nota</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>credential_bruteforce</td>
+            <td class="verdict">BRUTE_FORCE</td>
+            <td>
+              <span class="lang-en">5 distinct credential pairs, one session</span>
+              <span class="lang-es">5 pares de credenciales distintos, una sesión</span>
+            </td>
+          </tr>
+          <tr>
+            <td>wildcard_harvest</td>
+            <td class="verdict">WILDCARD_HARVEST</td>
+            <td>
+              <span class="lang-en">subscription to the full wildcard</span>
+              <span class="lang-es">suscripción al comodín completo</span>
+            </td>
+          </tr>
+          <tr>
+            <td>coap_amplification</td>
+            <td class="verdict is-severe">
+              AMPLIFICATION_ATTEMPT
+              <b class="severe-mark"><span class="lang-en">SEVERE</span><span class="lang-es">GRAVE</span></b>
+            </td>
+            <td>
+              <span class="lang-en">5 replies suppressed · 0 bytes out</span>
+              <span class="lang-es">5 respuestas suprimidas · 0 bytes de salida</span>
+            </td>
+          </tr>
+          <tr>
+            <td>coap_open_proxy</td>
+            <td class="verdict is-severe">
+              OPEN_PROXY_ABUSE
+              <b class="severe-mark"><span class="lang-en">SEVERE</span><span class="lang-es">GRAVE</span></b>
+            </td>
+            <td>
+              <span class="lang-en">Proxy-Uri refused · 0 bytes out</span>
+              <span class="lang-es">Proxy-Uri rechazado · 0 bytes de salida</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="plate-foot lang-en">
+        The verdict belongs to the session, not the packet — and the two CoAP rows returned nothing at all:
+        answering them would have turned the honeypot into a reflector aimed at a third party.
+      </p>
+      <p class="plate-foot lang-es">
+        El veredicto pertenece a la sesión, no al paquete — y las dos filas CoAP no devolvieron nada:
+        responderlas habría convertido el honeypot en un reflector apuntando a un tercero.
+      </p>
+    </figure>
+  </div>
+</section>
+
+<script>
+  // The GIF is two megabytes. It stays unrequested until someone presses play.
+  const button = document.querySelector<HTMLButtonElement>('#fig2-play');
+  const media = document.querySelector<HTMLImageElement>('#fig2-media');
+
+  button?.addEventListener('click', () => {
+    const motion = media?.dataset.motion;
+    if (!media || !motion) return;
+
+    media.src = motion;
+    button.remove();
+  });
+</script>

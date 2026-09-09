@@ -13,7 +13,7 @@ const { title, description } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="es" data-theme="dark" data-lang="es">
+<html lang="en" data-theme="dark" data-lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -26,17 +26,20 @@ const { title, description } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
     <script is:inline>
+      /*
+       * Applied before first paint so a returning reader never sees the
+       * notebook flash in the wrong ink or the wrong language. English and dark
+       * are the defaults; both are one button away in the running head.
+       */
       (() => {
         const root = document.documentElement;
         root.classList.add('js');
+
         const storedTheme = localStorage.getItem('theme');
         const storedLanguage = localStorage.getItem('language');
-        const theme = storedTheme === 'light' || storedTheme === 'dark'
-          ? storedTheme
-          : 'dark';
-        const language = storedLanguage === 'es' || storedLanguage === 'en'
-          ? storedLanguage
-          : 'es';
+
+        const theme = storedTheme === 'light' || storedTheme === 'dark' ? storedTheme : 'dark';
+        const language = storedLanguage === 'es' || storedLanguage === 'en' ? storedLanguage : 'en';
 
         root.dataset.theme = theme;
         root.dataset.lang = language;
@@ -44,7 +47,7 @@ const { title, description } = Astro.props;
       })();
     </script>
   </head>
-  <body class="antialiased">
+  <body>
     <slot />
   </body>
 </html>

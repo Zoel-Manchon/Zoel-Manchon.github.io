@@ -1,0 +1,80 @@
+---
+/*
+ * One entry in the notebook.
+ *
+ * Three columns that never change: a dated rail on the left, the entry itself
+ * in the measure, and marginalia on the right. Every entry is the same shape
+ * and roughly the same length — that constant rhythm is what makes thirteen of
+ * them read as a volume instead of an endless list.
+ */
+import type { Project } from '@/data/site';
+import { dayLabel } from '@/lib/dates';
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+const opened = dayLabel(project.started);
+const updated = dayLabel(project.updated);
+---
+
+<article class="entry" id={`entry-${project.number}`}>
+  <div class="entry-rail">
+    <span class="entry-number">{project.number}</span>
+    <span class="entry-date">
+      <span class="lang-en">{opened.en}</span>
+      <span class="lang-es">{opened.es}</span>
+    </span>
+    <a class="entry-repo" href={project.url} target="_blank" rel="noreferrer">{project.repo}</a>
+  </div>
+
+  <div class="entry-body">
+    <h3 class="entry-title">
+      <a href={project.url} target="_blank" rel="noreferrer">
+        <span class="lang-en">{project.title.en}</span>
+        <span class="lang-es">{project.title.es}</span>
+        <span class="entry-arrow" aria-hidden="true">↗</span>
+      </a>
+    </h3>
+
+    <p class="entry-prose lang-en">{project.description.en}</p>
+    <p class="entry-prose lang-es">{project.description.es}</p>
+
+    <p class="entry-output">
+      <span class="sr-only lang-en">Program output</span>
+      <span class="sr-only lang-es">Salida del programa</span>
+      <code class="lang-en">{project.terminal.en}</code>
+      <code class="lang-es">{project.terminal.es}</code>
+    </p>
+
+    <ul class="entry-points">
+      {project.highlights.map((highlight) => (
+        <li>
+          <span class="lang-en">{highlight.en}</span>
+          <span class="lang-es">{highlight.es}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  <aside class="entry-margin">
+    <p class="margin-label">
+      <span class="lang-en">Stack</span>
+      <span class="lang-es">Pila</span>
+    </p>
+    <ul class="margin-stack">
+      {project.stack.map((technology) => <li>{technology}</li>)}
+    </ul>
+    <p class="margin-note">
+      <span class="lang-en">Last worked {updated.en}</span>
+      <span class="lang-es">Última mano {updated.es}</span>
+    </p>
+    <p class="margin-note">
+      <a href={`#entry-${project.cf}`}>
+        <span class="lang-en">cf. entry {project.cf}</span>
+        <span class="lang-es">cf. entrada {project.cf}</span>
+      </a>
+    </p>
+  </aside>
+</article>
