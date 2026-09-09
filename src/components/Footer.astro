@@ -37,32 +37,34 @@ import { logbook } from '@/data/site';
       </p>
     </div>
 
-    <dl class="colophon-contact">
+    <div class="colophon-contact">
       <p class="margin-label">
         <span class="lang-en">Contact</span>
         <span class="lang-es">Contacto</span>
       </p>
-      <div>
-        <dt><span class="lang-en">Email</span><span class="lang-es">Correo</span></dt>
-        <dd><a href={`mailto:${site.email}`}>{site.email}</a></dd>
-      </div>
-      <div>
-        <dt><span class="lang-en">Repositories</span><span class="lang-es">Repositorios</span></dt>
-        <dd>
-          <a href={site.github} target="_blank" rel="noreferrer">github.com/Zoel-Manchon <span aria-hidden="true">↗</span></a>
-        </dd>
-      </div>
-      <div>
-        <dt><span class="lang-en">Location</span><span class="lang-es">Ubicación</span></dt>
-        <dd><span class="lang-en">{site.location.en}</span><span class="lang-es">{site.location.es}</span></dd>
-      </div>
-      <div>
-        <dt><span class="lang-en">This volume</span><span class="lang-es">Este volumen</span></dt>
-        <dd>
-          <span class="lang-en">Built with Astro · back to <a href="#top">the top</a></span>
-          <span class="lang-es">Hecho con Astro · volver <a href="#top">arriba</a></span>
-        </dd>
-      </div>
-    </dl>
+      <dl>
+        <div>
+          <dt><span class="lang-en">Email</span><span class="lang-es">Correo</span></dt>
+          <dd><a href={`mailto:${site.email}`}>{site.email}</a></dd>
+        </div>
+        <div>
+          <dt><span class="lang-en">Repositories</span><span class="lang-es">Repositorios</span></dt>
+          <dd>
+            <a href={site.github} target="_blank" rel="noreferrer">github.com/Zoel-Manchon <span aria-hidden="true">↗</span></a>
+          </dd>
+        </div>
+        <div>
+          <dt><span class="lang-en">Location</span><span class="lang-es">Ubicación</span></dt>
+          <dd><span class="lang-en">{site.location.en}</span><span class="lang-es">{site.location.es}</span></dd>
+        </div>
+        <div>
+          <dt><span class="lang-en">This volume</span><span class="lang-es">Este volumen</span></dt>
+          <dd>
+            <span class="lang-en">Built with Astro · back to <a href="#top">the top</a></span>
+            <span class="lang-es">Hecho con Astro · volver <a href="#top">arriba</a></span>
+          </dd>
+        </div>
+      </dl>
+    </div>
   </div>
 </footer>
